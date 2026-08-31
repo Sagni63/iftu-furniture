@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iftuu Furniture - Luxury & Quality</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root {
+            --primary: #d4af37;
+            --dark: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #f4f4f4;
+        }
+
+        body { background-color: #0a0a0a; color: var(--text-light); }
+
+        header { background: var(--dark); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .logo h1 { color: var(--primary); font-size: 26px; font-weight: bold; letter-spacing: 1px; }
+        .logo p { font-size: 11px; color: #aaa; }
+        .contact-header a { color: var(--primary); text-decoration: none; font-size: 18px; font-weight: bold; }
+
+        .hero { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('8.jpg'); background-size: cover; background-position: center; text-align: center; padding: 70px 20px; border-bottom: 1px solid #333; }
+        .hero h2 { font-size: 32px; color: var(--primary); margin-bottom: 10px; }
+        .hero p { font-size: 16px; color: #ddd; margin-bottom: 20px; }
+        .btn-main { background: var(--primary); color: #000; padding: 12px 30px; border: none; font-weight: bold; font-size: 16px; border-radius: 25px; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .btn-main:hover { background: #fff; transform: scale(1.05); }
+
+        .filter-container { text-align: center; margin: 30px 0 10px; }
+        .filter-btn { background: #222; color: #fff; border: 1px solid var(--primary); padding: 8px 18px; margin: 5px; border-radius: 20px; cursor: pointer; transition: 0.3s; }
+        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: #000; font-weight: bold; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        
+        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #2a2a2a; transition: 0.3s; position: relative; }
+        .card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2); }
+        
+        .card-img-wrapper { position: relative; width: 100%; height: 260px; overflow: hidden; cursor: pointer; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover img { transform: scale(1.08); }
+
+        .card-body { padding: 18px; text-align: center; }
+        .card-title { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 8px; }
+        .card-desc { font-size: 12px; color: #aaa; margin-bottom: 12px; height: 32px; overflow: hidden; }
+        .price-tag { font-size: 18px; color: var(--primary); font-weight: bold; margin-bottom: 15px; }
+        .btn-order { display: block; width: 100%; background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 10px; border-radius: 6px; font-weight: bold; text-decoration: none; transition: 0.3s; }
+        .btn-order:hover { background: var(--primary); color: #000; }
+
+        .modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+        .modal img { max-width: 90%; max-height: 80%; border: 3px solid var(--primary); border-radius: 8px; }
+        .close-modal { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 35px; cursor: pointer; }
+
+        footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; margin-top: 50px; border-top: 2px solid var(--primary); font-size: 13px; }
+        footer b { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>IFTUU FURNITURE</h1>
+            <p>Elegance you deserve, Quality you can trust</p>
+        </div>
+        <div class="contact-header">
+            <a href="tel:0910217822">📞 0910217822</a>
+            <div style="font-size: 11px; color: #aaa;">Gincii & Jelduu</div>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h2>Qulqullinaa fi Bareedina Mana Keessaniif</h2>
+        <p>Meeshaalee mana keessaa ammayyaa fi jabaatoo ta'an nu biraa argattu!</p>
+        <a href="tel:0910217822" class="btn-main">Amma Bilbilaa</a>
+    </div>
+
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterItems('all', event)">Hunda (All)</button>
+        <button class="filter-btn" onclick="filterItems('sofa', event)">Sofa & Siree</button>
+        <button class="filter-btn" onclick="filterItems('table', event)">Minjalaa & TV</button>
+        <button class="filter-btn" onclick="filterItems('storage', event)">Wardrobe & Kabinee</button>
+    </div>
+
+    <div class="container">
+        <div class="grid">
+
+            <div class="card" data-category="sofa">
+                <div class="card-img-wrapper" onclick="openLightbox('1.jpg')">
+                    <img src="1.jpg" alt="Siree Ammayyaa">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Siree Ammayyaa (Luxury Bed)</div>
+                    <div class="card-desc">Ifeensaa fi Bareedina lamiin kan faaya'ee</div>
+                    <div class="price-tag">Gatii Madaalawaa</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="sofa">
+                <div class="card-img-wrapper" onclick="openLightbox('2.jpg')">
+                    <img src="2.jpg" alt="Sofa Corner">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Sofa Set Ammayyaa</div>
+                    <div class="card-desc">Mijataa fi Qulqullina Olaanaa Qabu</div>
+                    <div class="price-tag">Gatii Madaalawaa</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="table">
+                <div class="card-img-wrapper" onclick="openLightbox('3.jpg')">
+                    <img src="3.jpg" alt="TV Stand">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">TV Istandi (Balinii 2m)</div>
+                    <div class="card-desc">Walini Caalaa Fi Durable | Ammayyaa</div>
+                    <div class="price-tag">42,000 Qarshii</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="table">
+                <div class="card-img-wrapper" onclick="openLightbox('4.jpg')">
+                    <img src="4.jpg" alt="Dining Table">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Minjalaa Nyataa (Dining Table)</div>
+                    <div class="card-desc">Minjalaa nyataa tajaajila gatii madaalawaan</div>
+                    <div class="price-tag">90,000 Qarshii</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="storage">
+                <div class="card-img-wrapper" onclick="openLightbox('5.jpg')">
+                    <img src="5.jpg" alt="Cupboard">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Kabinee Mana Kuffaana</div>
+                    <div class="card-desc">Spacious Storage | Stylish Design</div>
+                    <div class="price-tag">Gatii Madaalawaa</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="table">
+                <div class="card-img-wrapper" onclick="openLightbox('6.jpg')">
+                    <img src="6.jpg" alt="Modern Dining Table">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Minjalaa Nyataa Gurraacha</div>
+                    <div class="card-desc">Modern Design | Premium Quality</div>
+                    <div class="price-tag">Gatii Madaalawaa</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="table">
+                <div class="card-img-wrapper" onclick="openLightbox('7.jpg')">
+                    <img src="7.jpg" alt="TV Stand Wall">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">TV Istandi Gudaa (Wall Design)</div>
+                    <div class="card-desc">Bagarawandi Saakhnaji Jitumbarbada</div>
+                    <div class="price-tag">Gatii Feyyisaa Bilisimaa</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="sofa">
+                <div class="card-img-wrapper" onclick="openLightbox('8.jpg')">
+                    <img src="8.jpg" alt="Sofa L-Shape Blue">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Sofa L-Shape (Blue)</div>
+                    <div class="card-desc">Jabaataa & Dheeressa | Mijataa & Bareedaa</div>
+                    <div class="price-tag">110,000 Qarshii</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="storage">
+                <div class="card-img-wrapper" onclick="openLightbox('9.jpg')">
+                    <img src="9.jpg" alt="Wardrobe">
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Wardrobe Premium Quality</div>
+                    <div class="card-desc">Qulqullina, ciminaa fi bareedina qabatee</div>
+                    <div class="price-tag">60,000 Qarshii</div>
+                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close-modal" onclick="closeLightbox()">&times;</span>
+        <img id="modalImg" src="" alt="Full Preview">
+    </div>
+
+    <footer>
+        &copy; 2026 <b>IFTUU FURNITURE</b> - Bakkee: Gincii & Jelduu | Bilbilaa: <b>0910217822</b>
+    </footer>
+
+    <script>
+        function filterItems(category, e) {
+            let cards = document.querySelectorAll('.card');
+            let buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function openLightbox(imgSrc) {
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('imageModalstyle.display = 'flex'; // fixed syntax
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
