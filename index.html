@@ -1,910 +1,1907 @@
-```html
 <!DOCTYPE html>
-<html lang="om">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FURNI HUB</title>
 
-    <title>Iftuu Furniture - Luxury & Quality</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#f7f5f0;
+color:#222;
+}
 
-        :root {
-            --primary: #d4af37;
-            --dark: #121212;
-            --card-bg: #1e1e1e;
-            --text-light: #f4f4f4;
-        }
+header{
+background:#171717;
+color:white;
+padding:15px 5%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+position:sticky;
+top:0;
+z-index:999;
+}
 
-        body {
-            background: #0a0a0a;
-            color: var(--text-light);
-        }
+.logo{
+font-size:25px;
+font-weight:bold;
+letter-spacing:1px;
+}
 
-        /* HEADER */
-        header {
-            background: var(--dark);
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
+nav{
+display:flex;
+gap:7px;
+align-items:center;
+flex-wrap:wrap;
+}
 
-        .logo h1 {
-            color: var(--primary);
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+button{
+border:0;
+padding:10px 14px;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
 
-        .logo p {
-            font-size: 11px;
-            color: #aaa;
-        }
+nav button{
+background:#303030;
+color:white;
+}
 
-        .contact-header {
-            text-align: right;
-        }
+nav button:hover{
+background:#555;
+}
 
-        .contact-header a {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-        }
+.hero{
+min-height:450px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:60px 20px;
+background:
+linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),
+url("https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1600&q=80")
+center/cover;
+color:white;
+}
 
-        .contact-header div {
-            font-size: 11px;
-            color: #aaa;
-            margin-top: 4px;
-        }
+.hero-content{
+width:100%;
+max-width:850px;
+}
 
-        /* HERO */
-        .hero {
-            background:
-                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-                url("images/8.JPG");
+.hero h1{
+font-size:50px;
+margin-bottom:15px;
+}
 
-            background-size: cover;
-            background-position: center;
+.hero p{
+font-size:19px;
+margin-bottom:25px;
+}
 
-            text-align: center;
-            padding: 90px 20px;
+.search{
+background:white;
+padding:7px;
+border-radius:12px;
+display:flex;
+max-width:750px;
+margin:auto;
+}
 
-            border-bottom: 1px solid #333;
-        }
+.search input{
+flex:1;
+border:0;
+outline:0;
+padding:15px;
+font-size:16px;
+}
 
-        .hero h2 {
-            font-size: 32px;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
+.search button{
+background:#171717;
+color:white;
+}
 
-        .hero p {
-            font-size: 16px;
-            color: #ddd;
-            margin-bottom: 25px;
-        }
+.container{
+width:90%;
+max-width:1250px;
+margin:35px auto;
+}
 
-        .btn-main {
-            background: var(--primary);
-            color: #000;
-            padding: 12px 30px;
-            border: none;
-            font-weight: bold;
-            font-size: 16px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
+.toolbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
 
-        .btn-main:hover {
-            background: #fff;
-            transform: scale(1.05);
-        }
+.categories{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-bottom:25px;
+}
 
-        /* FILTER */
-        .filter-container {
-            text-align: center;
-            margin: 30px 0 10px;
-            padding: 0 10px;
-        }
+.category{
+background:white;
+border:1px solid #ddd;
+}
 
-        .filter-btn {
-            background: #222;
-            color: #fff;
-            border: 1px solid var(--primary);
-            padding: 8px 18px;
-            margin: 5px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+.category.active,
+.category:hover{
+background:#171717;
+color:white;
+}
 
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--primary);
-            color: #000;
-            font-weight: bold;
-        }
+.products{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+gap:22px;
+}
 
-        /* PRODUCTS */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+.card{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+transition:.2s;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(280px, 1fr)
-            );
-            gap: 25px;
-        }
+.card:hover{
+transform:translateY(-4px);
+}
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #2a2a2a;
-            transition: 0.3s;
-            position: relative;
-        }
+.card-image{
+position:relative;
+}
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow:
-                0 8px 20px rgba(212, 175, 55, 0.2);
-        }
+.card-image img{
+width:100%;
+height:230px;
+object-fit:cover;
+display:block;
+}
 
-        /* PHOTO */
-        .card-img-wrapper {
-            position: relative;
-            width: 100%;
-            height: 260px;
-            overflow: hidden;
-            cursor: pointer;
-            background: #111;
-        }
+.badge{
+position:absolute;
+top:12px;
+left:12px;
+background:white;
+padding:6px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
 
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: 0.5s;
-        }
+.card-body{
+padding:17px;
+}
 
-        .card:hover img {
-            transform: scale(1.08);
-        }
+.card-body h3{
+font-size:20px;
+margin-bottom:6px;
+}
 
-        /* IMAGE ERROR */
-        .card-img-wrapper img.error {
-            display: none;
-        }
+.seller{
+font-size:13px;
+color:#777;
+}
 
-        .image-error {
-            display: none;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-            color: #aaa;
-            text-align: center;
-            padding: 20px;
-        }
+.price{
+font-size:22px;
+font-weight:bold;
+margin:10px 0;
+}
 
-        /* CARD BODY */
-        .card-body {
-            padding: 18px;
-            text-align: center;
-        }
+.location{
+color:#777;
+font-size:14px;
+}
 
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 8px;
-        }
+.description{
+margin:10px 0;
+line-height:1.5;
+color:#555;
+}
 
-        .card-desc {
-            font-size: 12px;
-            color: #aaa;
-            margin-bottom: 12px;
-            min-height: 32px;
-        }
+.actions{
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+margin-top:15px;
+}
 
-        .price-tag {
-            font-size: 18px;
-            color: var(--primary);
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+.actions button{
+background:#f1f1f1;
+padding:8px 10px;
+}
 
-        .btn-order {
-            display: block;
-            width: 100%;
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: 0.3s;
-        }
+.actions button:hover{
+background:#ddd;
+}
 
-        .btn-order:hover {
-            background: var(--primary);
-            color: #000;
-        }
+.delete{
+background:#ffe1e1!important;
+color:#b00000;
+}
 
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+.comments{
+display:none;
+margin-top:15px;
+border-top:1px solid #eee;
+padding-top:12px;
+}
 
-        .modal img {
-            max-width: 90%;
-            max-height: 80%;
-            border: 3px solid var(--primary);
-            border-radius: 8px;
-            object-fit: contain;
-        }
+.comment-input{
+width:100%;
+padding:10px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:7px;
+}
 
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            color: #fff;
-            font-size: 40px;
-            cursor: pointer;
-        }
+.comment{
+background:#f4f4f4;
+padding:8px;
+border-radius:7px;
+margin-top:5px;
+font-size:14px;
+}
 
-        /* FOOTER */
-        footer {
-            background: var(--dark);
-            color: #aaa;
-            text-align: center;
-            padding: 25px;
-            margin-top: 50px;
-            border-top: 2px solid var(--primary);
-            font-size: 13px;
-        }
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:2000;
+padding:20px;
+}
 
-        footer b {
-            color: var(--primary);
-        }
+.modal-box{
+background:white;
+width:100%;
+max-width:520px;
+max-height:90vh;
+overflow-y:auto;
+border-radius:16px;
+padding:25px;
+}
 
-        /* MOBILE */
-        @media (max-width: 600px) {
+.modal-box h2{
+margin-bottom:18px;
+}
 
-            header {
-                padding: 12px 15px;
-            }
+.close{
+float:right;
+font-size:28px;
+cursor:pointer;
+}
 
-            .logo h1 {
-                font-size: 19px;
-            }
+.form-group{
+margin-bottom:12px;
+}
 
-            .logo p {
-                font-size: 9px;
-            }
+.form-group label{
+display:block;
+margin-bottom:5px;
+font-weight:bold;
+}
 
-            .contact-header a {
-                font-size: 14px;
-            }
+.form-group input,
+.form-group textarea,
+.form-group select{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+outline:none;
+}
 
-            .hero {
-                padding: 65px 15px;
-            }
+.form-group textarea{
+resize:vertical;
+}
 
-            .hero h2 {
-                font-size: 25px;
-            }
+.primary{
+background:#171717;
+color:white;
+width:100%;
+margin-top:10px;
+}
 
-            .hero p {
-                font-size: 14px;
-            }
+.user-box{
+background:#eee;
+padding:9px 12px;
+border-radius:8px;
+font-size:13px;
+}
 
-            .grid {
-                grid-template-columns: 1fr;
-            }
+.share-box{
+display:none;
+margin-top:10px;
+padding:10px;
+border:1px solid #ddd;
+border-radius:8px;
+}
 
-            .card-img-wrapper {
-                height: 280px;
-            }
-        }
-    </style>
+.share-box button{
+margin:3px;
+background:#eee;
+}
+
+.three-d{
+height:430px;
+background:#f0f0f0;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+font-size:18px;
+}
+
+.three-d .cube{
+font-size:90px;
+display:block;
+margin-bottom:15px;
+}
+
+footer{
+margin-top:60px;
+background:#171717;
+color:white;
+text-align:center;
+padding:40px 20px;
+}
+
+.footer-social{
+margin-top:15px;
+display:flex;
+justify-content:center;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.footer-social button{
+background:#333;
+color:white;
+}
+
+.hidden{
+display:none!important;
+}
+
+.empty{
+text-align:center;
+padding:50px;
+grid-column:1/-1;
+color:#777;
+}
+
+@media(max-width:700px){
+
+header{
+justify-content:center;
+}
+
+.logo{
+width:100%;
+text-align:center;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+.search{
+flex-direction:column;
+}
+
+.search input{
+width:100%;
+}
+
+}
+</style>
 </head>
 
 <body>
 
 <!-- HEADER -->
+
 <header>
 
-    <div class="logo">
-        <h1>IFTUU FURNITURE</h1>
-        <p>Elegance you deserve, Quality you can trust</p>
-    </div>
+<div class="logo">
+🛋️ FURNI HUB
+</div>
 
-    <div class="contact-header">
-        <a href="tel:0910217822">📞 0910217822</a>
-        <div>Gincii & Jelduu</div>
-    </div>
+<nav>
+
+<button onclick="changeLanguage('en')">EN</button>
+<button onclick="changeLanguage('am')">አማ</button>
+<button onclick="changeLanguage('om')">OR</button>
+
+<button id="addPostButton"
+onclick="openAddPost()"
+style="display:none">
+➕ Add Post
+</button>
+
+<button id="loginButton"
+onclick="openLogin()">
+🔐 Seller Login
+</button>
+
+<button id="logoutButton"
+onclick="logout()"
+style="display:none">
+Logout
+</button>
+
+</nav>
 
 </header>
 
 
 <!-- HERO -->
+
 <section class="hero">
 
-    <h2>Qulqullinaa fi Bareedina Mana Keessaniif</h2>
+<div class="hero-content">
 
-    <p>
-        Meeshaalee mana keessaa ammayyaa fi jabaatoo
-        ta'an nu biraa argattu!
-    </p>
+<h1 id="heroTitle">
+Find Your Perfect Furniture
+</h1>
 
-    <a href="tel:0910217822" class="btn-main">
-        📞 Amma Bilbilaa
-    </a>
+<p id="heroText">
+Buy, sell and discover beautiful furniture.
+</p>
+
+<div class="search">
+
+<input
+id="searchInput"
+type="text"
+placeholder="Search furniture..."
+oninput="searchFurniture()">
+
+<button onclick="searchFurniture()">
+🔎 Search
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<!-- FILTER -->
-<div class="filter-container">
-
-    <button
-        class="filter-btn active"
-        onclick="filterItems('all', this)">
-        Hunda (All)
-    </button>
-
-    <button
-        class="filter-btn"
-        onclick="filterItems('sofa', this)">
-        Sofa & Siree
-    </button>
-
-    <button
-        class="filter-btn"
-        onclick="filterItems('table', this)">
-        Minjalaa & TV
-    </button>
-
-    <button
-        class="filter-btn"
-        onclick="filterItems('storage', this)">
-        Wardrobe & Kabinee
-    </button>
-
-</div>
-
-
 <!-- PRODUCTS -->
+
 <div class="container">
 
-    <div class="grid">
-
-
-        <!-- 1 -->
-        <div class="card" data-category="sofa">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/1.JPG')">
-
-                <img
-                    src="images/1.JPG"
-                    alt="Siree Ammayyaa"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    Siree Ammayyaa (Luxury Bed)
-                </div>
-
-                <div class="card-desc">
-                    Ifeensaa fi Bareedina lamiin kan faaya'ee
-                </div>
-
-                <div class="price-tag">
-                    Gatii Madaalawaa
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- 2 -->
-        <div class="card" data-category="sofa">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/2.JPG')">
-
-                <img
-                    src="images/2.JPG"
-                    alt="Sofa Corner"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    Sofa Set Ammayyaa
-                </div>
-
-                <div class="card-desc">
-                    Mijataa fi Qulqullina Olaanaa Qabu
-                </div>
-
-                <div class="price-tag">
-                    Gatii Madaalawaa
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- 3 -->
-        <div class="card" data-category="table">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/3.JPG')">
-
-                <img
-                    src="images/3.JPG"
-                    alt="TV Stand"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    TV Istandi (Balinii 2m)
-                </div>
-
-                <div class="card-desc">
-                    Walini Caalaa Fi Durable | Ammayyaa
-                </div>
-
-                <div class="price-tag">
-                    42,000 Qarshii
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- 4 -->
-        <div class="card" data-category="table">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/4.JPG')">
-
-                <img
-                    src="images/4.JPG"
-                    alt="Dining Table"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    Minjalaa Nyataa (Dining Table)
-                </div>
-
-                <div class="card-desc">
-                    Minjalaa nyataa tajaajila gatii madaalawaan
-                </div>
-
-                <div class="price-tag">
-                    90,000 Qarshii
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- 5 -->
-        <div class="card" data-category="storage">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/5.JPG')">
-
-                <img
-                    src="images/5.JPG"
-                    alt="Cupboard"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    Kabinee Mana Kuffaana
-                </div>
-
-                <div class="card-desc">
-                    Spacious Storage | Stylish Design
-                </div>
-
-                <div class="price-tag">
-                    Gatii Madaalawaa
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- 6 -->
-        <div class="card" data-category="table">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/6.JPG')">
-
-                <img
-                    src="images/6.JPG"
-                    alt="Modern Dining Table"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    Minjalaa Nyataa Gurraacha
-                </div>
-
-                <div class="card-desc">
-                    Modern Design | Premium Quality
-                </div>
-
-                <div class="price-tag">
-                    Gatii Madaalawaa
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- 7 -->
-        <div class="card" data-category="table">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/7.JPG')">
-
-                <img
-                    src="images/7.JPG"
-                    alt="TV Stand Wall"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    TV Istandi Gudaa (Wall Design)
-                </div>
-
-                <div class="card-desc">
-                    Bagarawandi Saakhnaji Jitumbarbada
-                </div>
-
-                <div class="price-tag">
-                    Gatii Feyyisaa Bilisimaa
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- 8 -->
-        <div class="card" data-category="sofa">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/8.JPG')">
-
-                <img
-                    src="images/8.JPG"
-                    alt="Sofa L-Shape Blue"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    Sofa L-Shape (Blue)
-                </div>
-
-                <div class="card-desc">
-                    Jabaataa & Dheeressa | Mijataa & Bareedaa
-                </div>
-
-                <div class="price-tag">
-                    110,000 Qarshii
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- 9 -->
-        <div class="card" data-category="storage">
-
-            <div class="card-img-wrapper"
-                 onclick="openLightbox('images/9.JPG')">
-
-                <img
-                    src="images/9.JPG"
-                    alt="Wardrobe"
-                    onerror="imageError(this)">
-
-                <div class="image-error">
-                    📷 Photo hin argamne
-                </div>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-title">
-                    Wardrobe Premium Quality
-                </div>
-
-                <div class="card-desc">
-                    Qulqullina, ciminaa fi bareedina qabatee
-                </div>
-
-                <div class="price-tag">
-                    60,000 Qarshii
-                </div>
-
-                <a href="tel:0910217822" class="btn-order">
-                    Ajajuuf Bilbilaa
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
+<div class="toolbar">
+
+<h2 id="sectionTitle">
+Furniture
+</h2>
+
+<div class="user-box" id="userStatus">
+👤 Visitor
+</div>
 
 </div>
 
 
-<!-- IMAGE MODAL -->
-<div id="imageModal" class="modal">
+<div class="categories">
 
-    <span
-        class="close-modal"
-        onclick="closeLightbox()">
-        &times;
-    </span>
+<button class="category active"
+onclick="filterCategory('all',this)">
+All
+</button>
 
-    <img
-        id="modalImg"
-        src=""
-        alt="Full Preview">
+<button class="category"
+onclick="filterCategory('sofa',this)">
+🛋️ Sofa
+</button>
+
+<button class="category"
+onclick="filterCategory('bed',this)">
+🛏️ Bed
+</button>
+
+<button class="category"
+onclick="filterCategory('table',this)">
+🪑 Table
+</button>
+
+<button class="category"
+onclick="filterCategory('chair',this)">
+💺 Chair
+</button>
+
+<button class="category"
+onclick="filterCategory('office',this)">
+💻 Office
+</button>
+
+</div>
+
+
+<div
+id="products"
+class="products">
+</div>
+
+</div>
+
+
+<!-- LOGIN MODAL -->
+
+<div
+id="loginModal"
+class="modal">
+
+<div class="modal-box">
+
+<span class="close"
+onclick="closeModal('loginModal')">
+×
+</span>
+
+<h2>🔐 Seller Login</h2>
+
+<div class="form-group">
+<label>Name</label>
+<input
+id="loginName"
+placeholder="Your name">
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input
+id="loginEmail"
+type="email"
+placeholder="Email">
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<input
+id="loginPassword"
+type="password"
+placeholder="Password">
+</div>
+
+<button
+class="primary"
+onclick="sellerLogin()">
+Login as Seller
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ADD POST MODAL -->
+
+<div
+id="postModal"
+class="modal">
+
+<div class="modal-box">
+
+<span class="close"
+onclick="closeModal('postModal')">
+×
+</span>
+
+<h2>➕ Add Furniture</h2>
+
+<div class="form-group">
+<label>Furniture Name</label>
+<input
+id="postName"
+placeholder="Example: Modern Sofa">
+</div>
+
+<div class="form-group">
+<label>Price ETB</label>
+<input
+id="postPrice"
+type="number"
+placeholder="35000">
+</div>
+
+<div class="form-group">
+<label>Location</label>
+<input
+id="postLocation"
+placeholder="Addis Ababa">
+</div>
+
+<div class="form-group">
+<label>Category</label>
+
+<select id="postCategory">
+
+<option value="sofa">Sofa</option>
+<option value="bed">Bed</option>
+<option value="table">Table</option>
+<option value="chair">Chair</option>
+<option value="office">Office</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Description</label>
+
+<textarea
+id="postDescription"
+rows="4"
+placeholder="Furniture description">
+</textarea>
+
+</div>
+
+<div class="form-group">
+<label>📸 Photo</label>
+
+<input
+id="postPhoto"
+type="file"
+accept="image/*">
+
+</div>
+
+<div class="form-group">
+<label>🧊 3D Model</label>
+
+<input
+id="post3D"
+type="file"
+accept=".glb,.gltf">
+
+</div>
+
+<button
+class="primary"
+onclick="addPost()">
+Publish Post
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 3D MODAL -->
+
+<div
+id="threeDModal"
+class="modal">
+
+<div class="modal-box">
+
+<span class="close"
+onclick="closeModal('threeDModal')">
+×
+</span>
+
+<h2>🧊 3D Furniture</h2>
+
+<div
+id="threeDViewer"
+class="three-d">
+
+<div>
+
+<span class="cube">🧊</span>
+
+<p>
+3D Furniture Viewer
+</p>
+
+<p style="font-size:13px;color:#777">
+Upload a GLB/GLTF model to use a real 3D viewer.
+</p>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 
 <!-- FOOTER -->
+
 <footer>
 
-    &copy; 2026
-    <b>IFTUU FURNITURE</b>
+<h2>🛋️ FURNI HUB</h2>
 
-    - Bakkee: Gincii & Jelduu
+<p>
+Buy • Sell • Discover
+</p>
 
-    | Bilbilaa:
-    <b>0910217822</b>
+<div class="footer-social">
+
+<button onclick="socialShare('telegram')">
+✈️ Telegram
+</button>
+
+<button onclick="socialShare('whatsapp')">
+💬 WhatsApp
+</button>
+
+<button onclick="socialShare('facebook')">
+📘 Facebook
+</button>
+
+<button onclick="copyWebsiteLink()">
+🔗 Copy Link
+</button>
+
+</div>
+
+<p style="margin-top:20px">
+© 2026 FURNI HUB
+</p>
 
 </footer>
 
 
 <script>
 
-    /* FILTER */
-    function filterItems(category, button) {
+/* ===================================
+   USER
+=================================== */
 
-        const cards =
-            document.querySelectorAll('.card');
-
-        const buttons =
-            document.querySelectorAll('.filter-btn');
-
-        buttons.forEach(function(btn) {
-            btn.classList.remove('active');
-        });
-
-        button.classList.add('active');
-
-        cards.forEach(function(card) {
-
-            if (
-                category === 'all' ||
-                card.getAttribute('data-category') === category
-            ) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-
-        });
-    }
+let currentUser = null;
 
 
-    /* OPEN IMAGE */
-    function openLightbox(imgSrc) {
+/* ===================================
+   PRODUCTS
+=================================== */
 
-        const modal =
-            document.getElementById('imageModal');
+let products = [
 
-        const modalImg =
-            document.getElementById('modalImg');
+{
+id:1,
+ownerId:"seller_demo_1",
+ownerName:"Furni House",
+name:"Modern Sofa",
+price:35000,
+location:"Addis Ababa",
+category:"sofa",
+description:
+"Beautiful modern sofa for your living room.",
+image:
+"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80",
+likes:12,
+comments:[]
+},
 
-        modalImg.src = imgSrc;
+{
+id:2,
+ownerId:"seller_demo_2",
+ownerName:"Home Furniture",
+name:"Luxury Bed",
+price:45000,
+location:"Bole",
+category:"bed",
+description:
+"Comfortable luxury bedroom furniture.",
+image:
+"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+likes:8,
+comments:[]
+},
 
-        modal.style.display = 'flex';
-    }
+{
+id:3,
+ownerId:"seller_demo_3",
+ownerName:"Wood Furniture",
+name:"Dining Table",
+price:28000,
+location:"Addis Ababa",
+category:"table",
+description:
+"Strong and beautiful wooden dining table.",
+image:
+"https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=800&q=80",
+likes:6,
+comments:[]
+},
+
+{
+id:4,
+ownerId:"seller_demo_4",
+ownerName:"Office Pro",
+name:"Office Chair",
+price:12000,
+location:"Kazanchis",
+category:"office",
+description:
+"Comfortable office chair.",
+image:
+"https://images.unsplash.com/photo-1580480055273-228ff5388ef8?auto=format&fit=crop&w=800&q=80",
+likes:9,
+comments:[]
+}
+
+];
 
 
-    /* CLOSE IMAGE */
-    function closeLightbox() {
+/* ===================================
+   RENDER
+=================================== */
 
-        document.getElementById('imageModal')
-            .style.display = 'none';
+function renderProducts(list=products){
 
-        document.getElementById('modalImg')
-            .src = '';
-    }
+const container =
+document.getElementById("products");
 
-
-    /* CLICK OUTSIDE IMAGE */
-    document.getElementById('imageModal')
-        .addEventListener('click', function(event) {
-
-            if (event.target === this) {
-                closeLightbox();
-            }
-
-        });
+container.innerHTML="";
 
 
-    /* ESC KEY */
-    document.addEventListener('keydown', function(event) {
+if(list.length===0){
 
-        if (event.key === 'Escape') {
-            closeLightbox();
-        }
+container.innerHTML=`
+<div class="empty">
+<h2>😔 No furniture found</h2>
+<p>Try another search.</p>
+</div>
+`;
 
-    });
+return;
+}
 
 
-    /* PHOTO ERROR */
-    function imageError(img) {
+list.forEach(product=>{
 
-        img.classList.add('error');
+const owner =
+currentUser &&
+currentUser.id===product.ownerId;
 
-        const errorBox =
-            img.parentElement.querySelector('.image-error');
 
-        if (errorBox) {
-            errorBox.style.display = 'flex';
-        }
-    }
+let comments="";
+
+product.comments.forEach(c=>{
+
+comments+=`
+<div class="comment">
+<b>${escapeHTML(c.user)}</b>:
+${escapeHTML(c.text)}
+</div>
+`;
+
+});
+
+
+container.innerHTML+=`
+
+<div class="card">
+
+<div class="card-image">
+
+<img
+src="${product.image}"
+alt="${escapeHTML(product.name)}">
+
+<div class="badge">
+${product.category.toUpperCase()}
+</div>
+
+</div>
+
+<div class="card-body">
+
+<h3>
+${escapeHTML(product.name)}
+</h3>
+
+<div class="seller">
+👤 ${escapeHTML(product.ownerName)}
+</div>
+
+<div class="price">
+${Number(product.price).toLocaleString()} ETB
+</div>
+
+<div class="location">
+📍 ${escapeHTML(product.location)}
+</div>
+
+<div class="description">
+${escapeHTML(product.description)}
+</div>
+
+<div class="actions">
+
+<button
+onclick="likePost(${product.id})">
+❤️ ${product.likes}
+</button>
+
+<button
+onclick="toggleComments(${product.id})">
+💬 Comment
+</button>
+
+<button
+onclick="sharePost(${product.id})">
+🔗 Share
+</button>
+
+<button
+onclick="show3D(${product.id})">
+🧊 3D
+</button>
+
+${
+owner
+?
+`
+<button
+class="delete"
+onclick="deletePost(${product.id})">
+🗑️ Delete
+</button>
+`
+:""
+}
+
+</div>
+
+
+<div
+id="comments-${product.id}"
+class="comments">
+
+<input
+id="commentInput-${product.id}"
+class="comment-input"
+placeholder="Write a comment...">
+
+<button
+class="primary"
+onclick="addComment(${product.id})">
+Send Comment
+</button>
+
+<div>
+${comments}
+</div>
+
+</div>
+
+
+<div
+id="share-${product.id}"
+class="share-box">
+
+<button onclick="shareToTelegram(${product.id})">
+✈️ Telegram
+</button>
+
+<button onclick="shareToWhatsApp(${product.id})">
+💬 WhatsApp
+</button>
+
+<button onclick="shareToFacebook(${product.id})">
+📘 Facebook
+</button>
+
+<button onclick="copyPostLink(${product.id})">
+🔗 Copy Link
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* ===================================
+   LIKE
+=================================== */
+
+function likePost(id){
+
+const product =
+products.find(p=>p.id===id);
+
+if(!product)return;
+
+product.likes++;
+
+renderProducts();
+
+}
+
+
+/* ===================================
+   COMMENTS
+=================================== */
+
+function toggleComments(id){
+
+const box =
+document.getElementById(
+"comments-"+id
+);
+
+box.style.display =
+box.style.display==="block"
+?"none"
+:"block";
+
+}
+
+
+function addComment(id){
+
+if(!currentUser){
+
+alert(
+"Please login as a seller/user first."
+);
+
+openLogin();
+
+return;
+}
+
+
+const input =
+document.getElementById(
+"commentInput-"+id
+);
+
+const text =
+input.value.trim();
+
+
+if(!text){
+
+alert("Write a comment.");
+
+return;
+}
+
+
+const product =
+products.find(p=>p.id===id);
+
+
+product.comments.push({
+
+user:currentUser.name,
+
+text:text
+
+});
+
+
+renderProducts();
+
+
+setTimeout(()=>{
+
+document.getElementById(
+"comments-"+id
+).style.display="block";
+
+},20);
+
+}
+
+
+/* ===================================
+   SHARE
+=================================== */
+
+function sharePost(id){
+
+const box =
+document.getElementById(
+"share-"+id
+);
+
+box.style.display =
+box.style.display==="block"
+?"none"
+:"block";
+
+}
+
+
+function getPostLink(id){
+
+return window.location.href+
+"?product="+id;
+
+}
+
+
+function shareToTelegram(id){
+
+const p =
+products.find(x=>x.id===id);
+
+const url =
+getPostLink(id);
+
+const text =
+p.name+" - "+
+p.price+" ETB";
+
+window.open(
+"https://t.me/share/url?url="+
+encodeURIComponent(url)+
+"&text="+
+encodeURIComponent(text),
+"_blank"
+);
+
+}
+
+
+function shareToWhatsApp(id){
+
+const p =
+products.find(x=>x.id===id);
+
+const url =
+getPostLink(id);
+
+const text =
+p.name+
+" - "+
+p.price+
+" ETB "+
+url;
+
+window.open(
+"https://wa.me/?text="+
+encodeURIComponent(text),
+"_blank"
+);
+
+}
+
+
+function shareToFacebook(id){
+
+const url =
+getPostLink(id);
+
+window.open(
+"https://www.facebook.com/sharer/sharer.php?u="+
+encodeURIComponent(url),
+"_blank"
+);
+
+}
+
+
+function copyPostLink(id){
+
+const url =
+getPostLink(id);
+
+navigator.clipboard.writeText(url)
+.then(()=>alert("✅ Link copied!"));
+
+}
+
+
+function socialShare(type){
+
+const url =
+window.location.href;
+
+if(type==="telegram"){
+
+window.open(
+"https://t.me/share/url?url="+
+encodeURIComponent(url),
+"_blank"
+);
+
+}
+
+else if(type==="whatsapp"){
+
+window.open(
+"https://wa.me/?text="+
+encodeURIComponent(url),
+"_blank"
+);
+
+}
+
+else if(type==="facebook"){
+
+window.open(
+"https://www.facebook.com/sharer/sharer.php?u="+
+encodeURIComponent(url),
+"_blank"
+);
+
+}
+
+}
+
+
+function copyWebsiteLink(){
+
+navigator.clipboard.writeText(
+window.location.href
+);
+
+alert("✅ Website link copied!");
+
+}
+
+
+/* ===================================
+   DELETE OWNER ONLY
+=================================== */
+
+function deletePost(id){
+
+const product =
+products.find(p=>p.id===id);
+
+if(!product)return;
+
+
+if(!currentUser){
+
+alert("Please login.");
+
+return;
+
+}
+
+
+if(product.ownerId!==currentUser.id){
+
+alert(
+"❌ You can delete only your own post."
+);
+
+return;
+
+}
+
+
+if(confirm(
+"Delete your furniture post?"
+)){
+
+products =
+products.filter(p=>p.id!==id);
+
+renderProducts();
+
+}
+
+}
+
+
+/* ===================================
+   SEARCH
+=================================== */
+
+function searchFurniture(){
+
+const value =
+document.getElementById(
+"searchInput"
+).value
+.toLowerCase()
+.trim();
+
+
+const result =
+products.filter(p=>
+
+p.name.toLowerCase()
+.includes(value)
+
+||
+
+p.location.toLowerCase()
+.includes(value)
+
+||
+
+p.category.toLowerCase()
+.includes(value)
+
+||
+
+p.description.toLowerCase()
+.includes(value)
+
+);
+
+
+renderProducts(result);
+
+}
+
+
+/* ===================================
+   CATEGORY
+=================================== */
+
+function filterCategory(category,button){
+
+document
+.querySelectorAll(".category")
+.forEach(b=>b.classList.remove("active"));
+
+button.classList.add("active");
+
+
+if(category==="all"){
+
+renderProducts();
+
+return;
+
+}
+
+
+renderProducts(
+products.filter(
+p=>p.category===category
+)
+);
+
+}
+
+
+/* ===================================
+   LOGIN
+=================================== */
+
+function openLogin(){
+
+document.getElementById(
+"loginModal"
+).style.display="flex";
+
+}
+
+
+function sellerLogin(){
+
+const name =
+document.getElementById(
+"loginName"
+).value.trim();
+
+const email =
+document.getElementById(
+"loginEmail"
+).value.trim();
+
+const password =
+document.getElementById(
+"loginPassword"
+).value;
+
+
+if(!name||!email||!password){
+
+alert(
+"Please fill all fields."
+);
+
+return;
+
+}
+
+
+currentUser={
+
+id:"seller_"+email,
+
+name:name,
+
+email:email,
+
+role:"seller"
+
+};
+
+
+localStorage.setItem(
+"furniUser",
+JSON.stringify(currentUser)
+);
+
+
+closeModal("loginModal");
+
+updateUserUI();
+
+renderProducts();
+
+alert(
+"✅ Seller login successful!"
+);
+
+}
+
+
+/* ===================================
+   LOGOUT
+=================================== */
+
+function logout(){
+
+currentUser=null;
+
+localStorage.removeItem(
+"furniUser"
+);
+
+updateUserUI();
+
+renderProducts();
+
+}
+
+
+/* ===================================
+   ADD POST
+=================================== */
+
+function openAddPost(){
+
+if(!currentUser){
+
+alert(
+"Only logged-in sellers can add a post."
+);
+
+openLogin();
+
+return;
+
+}
+
+
+document.getElementById(
+"postModal"
+).style.display="flex";
+
+}
+
+
+function addPost(){
+
+if(!currentUser){
+
+alert(
+"Only sellers can add posts."
+);
+
+return;
+
+}
+
+
+const name =
+document.getElementById(
+"postName"
+).value.trim();
+
+const price =
+Number(
+document.getElementById(
+"postPrice"
+).value
+);
+
+const location =
+document.getElementById(
+"postLocation"
+).value.trim();
+
+const category =
+document.getElementById(
+"postCategory"
+).value;
+
+const description =
+document.getElementById(
+"postDescription"
+).value.trim();
+
+const photo =
+document.getElementById(
+"postPhoto"
+).files[0];
+
+
+if(!name||!price||!location){
+
+alert(
+"Name, price and location are required."
+);
+
+return;
+
+}
+
+
+if(photo){
+
+const reader =
+new FileReader();
+
+reader.onload=function(e){
+
+saveNewPost(
+e.target.result,
+name,
+price,
+location,
+category,
+description
+);
+
+};
+
+reader.readAsDataURL(photo);
+
+}else{
+
+saveNewPost(
+"https://via.placeholder.com/800x500?text=Furniture",
+name,
+price,
+location,
+category,
+description
+);
+
+}
+
+}
+
+
+function saveNewPost(
+image,
+name,
+price,
+location,
+category,
+description
+){
+
+products.unshift({
+
+id:Date.now(),
+
+ownerId:currentUser.id,
+
+ownerName:currentUser.name,
+
+name:name,
+
+price:price,
+
+location:location,
+
+category:category,
+
+description:description,
+
+image:image,
+
+likes:0,
+
+comments:[]
+
+});
+
+
+clearPostForm();
+
+closeModal("postModal");
+
+renderProducts();
+
+alert(
+"✅ Furniture post added successfully!"
+);
+
+}
+
+
+/* ===================================
+   3D
+=================================== */
+
+function show3D(id){
+
+const product =
+products.find(p=>p.id===id);
+
+
+document.getElementById(
+"threeDViewer"
+).innerHTML=`
+
+<div>
+
+<span class="cube">🧊</span>
+
+<h3>
+${escapeHTML(product.name)}
+</h3>
+
+<p>
+3D Furniture Viewer
+</p>
+
+<p style="font-size:13px;color:#777;margin-top:10px">
+Real GLB/GLTF viewer can be connected here.
+</p>
+
+</div>
+`;
+
+
+document.getElementById(
+"threeDModal"
+).style.display="flex";
+
+}
+
+
+/* ===================================
+   LANGUAGE
+=================================== */
+
+function changeLanguage(lang){
+
+const languages={
+
+en:{
+title:"Find Your Perfect Furniture",
+text:"Buy, sell and discover beautiful furniture.",
+section:"Furniture"
+},
+
+am:{
+title:"የሚወዱትን የቤት እቃ ያግኙ",
+text:"የቤት እቃ ይግዙ፣ ይሽጡ እና ያግኙ።",
+section:"የቤት እቃዎች"
+},
+
+om:{
+title:"Meeshaa Manaa Jaalattu Argadhu",
+text:"Meeshaalee manaa bitaa, gurguri fi argadhu.",
+section:"Meeshaalee Manaa"
+}
+
+};
+
+
+document.getElementById(
+"heroTitle"
+).innerText=
+languages[lang].title;
+
+
+document.getElementById(
+"heroText"
+).innerText=
+languages[lang].text;
+
+
+document.getElementById(
+"sectionTitle"
+).innerText=
+languages[lang].section;
+
+}
+
+
+/* ===================================
+   UI
+=================================== */
+
+function updateUserUI(){
+
+const addButton =
+document.getElementById(
+"addPostButton"
+);
+
+const loginButton =
+document.getElementById(
+"loginButton"
+);
+
+const logoutButton =
+document.getElementById(
+"logoutButton"
+);
+
+const status =
+document.getElementById(
+"userStatus"
+);
+
+
+if(currentUser){
+
+addButton.style.display=
+"inline-block";
+
+loginButton.style.display=
+"none";
+
+logoutButton.style.display=
+"inline-block";
+
+status.innerHTML=
+"🧑‍💼 Seller: "+
+escapeHTML(currentUser.name);
+
+}else{
+
+addButton.style.display=
+"none";
+
+loginButton.style.display=
+"inline-block";
+
+logoutButton.style.display=
+"none";
+
+status.innerHTML=
+"👤 Visitor";
+
+}
+
+}
+
+
+/* ===================================
+   MODAL
+=================================== */
+
+function closeModal(id){
+
+document.getElementById(
+id
+).style.display="none";
+
+}
+
+
+/* ===================================
+   CLEAR FORM
+=================================== */
+
+function clearPostForm(){
+
+document.getElementById(
+"postName"
+).value="";
+
+document.getElementById(
+"postPrice"
+).value="";
+
+document.getElementById(
+"postLocation"
+).value="";
+
+document.getElementById(
+"postDescription"
+).value="";
+
+document.getElementById(
+"postPhoto"
+).value="";
+
+document.getElementById(
+"post3D"
+).value="";
+
+}
+
+
+/* ===================================
+   ESCAPE HTML
+=================================== */
+
+function escapeHTML(text){
+
+const div =
+document.createElement("div");
+
+div.textContent=text;
+
+return div.innerHTML;
+
+}
+
+
+/* ===================================
+   LOAD USER
+=================================== */
+
+function loadUser(){
+
+const saved =
+localStorage.getItem(
+"furniUser"
+);
+
+if(saved){
+
+try{
+
+currentUser=
+JSON.parse(saved);
+
+}catch(e){
+
+currentUser=null;
+
+}
+
+}
+
+updateUserUI();
+
+}
+
+
+/* ===================================
+   START
+=================================== */
+
+loadUser();
+
+renderProducts();
 
 </script>
 
 </body>
 </html>
-```
