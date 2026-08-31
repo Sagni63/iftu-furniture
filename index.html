@@ -1,23 +1,910 @@
-Furniture Web
-│
-├── Home
-├── Search 🔍
-├── Categories
-├── 3 Languages 🌍
-│   ├── Amharic
-│   ├── Afaan Oromoo
-│   └── English
-│
-├── User
-│   ├── Register
-│   ├── Login
-│   └── Profile
-│
-└── Seller
-    └── Add Post ➕
-         ├── Photo
-         ├── Furniture Name
-         ├── Price
-         ├── Location
-         ├── Description
-         └── 3D Model
+```html
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iftuu Furniture - Luxury & Quality</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #d4af37;
+            --dark: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #f4f4f4;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: var(--text-light);
+        }
+
+        /* HEADER */
+        header {
+            background: var(--dark);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo p {
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .contact-header {
+            text-align: right;
+        }
+
+        .contact-header a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .contact-header div {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        /* HERO */
+        .hero {
+            background:
+                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                url("images/8.JPG");
+
+            background-size: cover;
+            background-position: center;
+
+            text-align: center;
+            padding: 90px 20px;
+
+            border-bottom: 1px solid #333;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #ddd;
+            margin-bottom: 25px;
+        }
+
+        .btn-main {
+            background: var(--primary);
+            color: #000;
+            padding: 12px 30px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-main:hover {
+            background: #fff;
+            transform: scale(1.05);
+        }
+
+        /* FILTER */
+        .filter-container {
+            text-align: center;
+            margin: 30px 0 10px;
+            padding: 0 10px;
+        }
+
+        .filter-btn {
+            background: #222;
+            color: #fff;
+            border: 1px solid var(--primary);
+            padding: 8px 18px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary);
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* PRODUCTS */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(280px, 1fr)
+            );
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow:
+                0 8px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        /* PHOTO */
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #111;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: 0.5s;
+        }
+
+        .card:hover img {
+            transform: scale(1.08);
+        }
+
+        /* IMAGE ERROR */
+        .card-img-wrapper img.error {
+            display: none;
+        }
+
+        .image-error {
+            display: none;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* CARD BODY */
+        .card-body {
+            padding: 18px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 12px;
+            min-height: 32px;
+        }
+
+        .price-tag {
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-order {
+            display: block;
+            width: 100%;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-order:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 80%;
+            border: 3px solid var(--primary);
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #fff;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: #aaa;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            border-top: 2px solid var(--primary);
+            font-size: 13px;
+        }
+
+        footer b {
+            color: var(--primary);
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+
+            header {
+                padding: 12px 15px;
+            }
+
+            .logo h1 {
+                font-size: 19px;
+            }
+
+            .logo p {
+                font-size: 9px;
+            }
+
+            .contact-header a {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 65px 15px;
+            }
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-img-wrapper {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+    <div class="logo">
+        <h1>IFTUU FURNITURE</h1>
+        <p>Elegance you deserve, Quality you can trust</p>
+    </div>
+
+    <div class="contact-header">
+        <a href="tel:0910217822">📞 0910217822</a>
+        <div>Gincii & Jelduu</div>
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <h2>Qulqullinaa fi Bareedina Mana Keessaniif</h2>
+
+    <p>
+        Meeshaalee mana keessaa ammayyaa fi jabaatoo
+        ta'an nu biraa argattu!
+    </p>
+
+    <a href="tel:0910217822" class="btn-main">
+        📞 Amma Bilbilaa
+    </a>
+
+</section>
+
+
+<!-- FILTER -->
+<div class="filter-container">
+
+    <button
+        class="filter-btn active"
+        onclick="filterItems('all', this)">
+        Hunda (All)
+    </button>
+
+    <button
+        class="filter-btn"
+        onclick="filterItems('sofa', this)">
+        Sofa & Siree
+    </button>
+
+    <button
+        class="filter-btn"
+        onclick="filterItems('table', this)">
+        Minjalaa & TV
+    </button>
+
+    <button
+        class="filter-btn"
+        onclick="filterItems('storage', this)">
+        Wardrobe & Kabinee
+    </button>
+
+</div>
+
+
+<!-- PRODUCTS -->
+<div class="container">
+
+    <div class="grid">
+
+
+        <!-- 1 -->
+        <div class="card" data-category="sofa">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/1.JPG')">
+
+                <img
+                    src="images/1.JPG"
+                    alt="Siree Ammayyaa"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    Siree Ammayyaa (Luxury Bed)
+                </div>
+
+                <div class="card-desc">
+                    Ifeensaa fi Bareedina lamiin kan faaya'ee
+                </div>
+
+                <div class="price-tag">
+                    Gatii Madaalawaa
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 2 -->
+        <div class="card" data-category="sofa">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/2.JPG')">
+
+                <img
+                    src="images/2.JPG"
+                    alt="Sofa Corner"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    Sofa Set Ammayyaa
+                </div>
+
+                <div class="card-desc">
+                    Mijataa fi Qulqullina Olaanaa Qabu
+                </div>
+
+                <div class="price-tag">
+                    Gatii Madaalawaa
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 3 -->
+        <div class="card" data-category="table">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/3.JPG')">
+
+                <img
+                    src="images/3.JPG"
+                    alt="TV Stand"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    TV Istandi (Balinii 2m)
+                </div>
+
+                <div class="card-desc">
+                    Walini Caalaa Fi Durable | Ammayyaa
+                </div>
+
+                <div class="price-tag">
+                    42,000 Qarshii
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 4 -->
+        <div class="card" data-category="table">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/4.JPG')">
+
+                <img
+                    src="images/4.JPG"
+                    alt="Dining Table"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    Minjalaa Nyataa (Dining Table)
+                </div>
+
+                <div class="card-desc">
+                    Minjalaa nyataa tajaajila gatii madaalawaan
+                </div>
+
+                <div class="price-tag">
+                    90,000 Qarshii
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 5 -->
+        <div class="card" data-category="storage">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/5.JPG')">
+
+                <img
+                    src="images/5.JPG"
+                    alt="Cupboard"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    Kabinee Mana Kuffaana
+                </div>
+
+                <div class="card-desc">
+                    Spacious Storage | Stylish Design
+                </div>
+
+                <div class="price-tag">
+                    Gatii Madaalawaa
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 6 -->
+        <div class="card" data-category="table">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/6.JPG')">
+
+                <img
+                    src="images/6.JPG"
+                    alt="Modern Dining Table"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    Minjalaa Nyataa Gurraacha
+                </div>
+
+                <div class="card-desc">
+                    Modern Design | Premium Quality
+                </div>
+
+                <div class="price-tag">
+                    Gatii Madaalawaa
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 7 -->
+        <div class="card" data-category="table">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/7.JPG')">
+
+                <img
+                    src="images/7.JPG"
+                    alt="TV Stand Wall"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    TV Istandi Gudaa (Wall Design)
+                </div>
+
+                <div class="card-desc">
+                    Bagarawandi Saakhnaji Jitumbarbada
+                </div>
+
+                <div class="price-tag">
+                    Gatii Feyyisaa Bilisimaa
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 8 -->
+        <div class="card" data-category="sofa">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/8.JPG')">
+
+                <img
+                    src="images/8.JPG"
+                    alt="Sofa L-Shape Blue"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    Sofa L-Shape (Blue)
+                </div>
+
+                <div class="card-desc">
+                    Jabaataa & Dheeressa | Mijataa & Bareedaa
+                </div>
+
+                <div class="price-tag">
+                    110,000 Qarshii
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 9 -->
+        <div class="card" data-category="storage">
+
+            <div class="card-img-wrapper"
+                 onclick="openLightbox('images/9.JPG')">
+
+                <img
+                    src="images/9.JPG"
+                    alt="Wardrobe"
+                    onerror="imageError(this)">
+
+                <div class="image-error">
+                    📷 Photo hin argamne
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="card-title">
+                    Wardrobe Premium Quality
+                </div>
+
+                <div class="card-desc">
+                    Qulqullina, ciminaa fi bareedina qabatee
+                </div>
+
+                <div class="price-tag">
+                    60,000 Qarshii
+                </div>
+
+                <a href="tel:0910217822" class="btn-order">
+                    Ajajuuf Bilbilaa
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- IMAGE MODAL -->
+<div id="imageModal" class="modal">
+
+    <span
+        class="close-modal"
+        onclick="closeLightbox()">
+        &times;
+    </span>
+
+    <img
+        id="modalImg"
+        src=""
+        alt="Full Preview">
+
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+
+    &copy; 2026
+    <b>IFTUU FURNITURE</b>
+
+    - Bakkee: Gincii & Jelduu
+
+    | Bilbilaa:
+    <b>0910217822</b>
+
+</footer>
+
+
+<script>
+
+    /* FILTER */
+    function filterItems(category, button) {
+
+        const cards =
+            document.querySelectorAll('.card');
+
+        const buttons =
+            document.querySelectorAll('.filter-btn');
+
+        buttons.forEach(function(btn) {
+            btn.classList.remove('active');
+        });
+
+        button.classList.add('active');
+
+        cards.forEach(function(card) {
+
+            if (
+                category === 'all' ||
+                card.getAttribute('data-category') === category
+            ) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+
+        });
+    }
+
+
+    /* OPEN IMAGE */
+    function openLightbox(imgSrc) {
+
+        const modal =
+            document.getElementById('imageModal');
+
+        const modalImg =
+            document.getElementById('modalImg');
+
+        modalImg.src = imgSrc;
+
+        modal.style.display = 'flex';
+    }
+
+
+    /* CLOSE IMAGE */
+    function closeLightbox() {
+
+        document.getElementById('imageModal')
+            .style.display = 'none';
+
+        document.getElementById('modalImg')
+            .src = '';
+    }
+
+
+    /* CLICK OUTSIDE IMAGE */
+    document.getElementById('imageModal')
+        .addEventListener('click', function(event) {
+
+            if (event.target === this) {
+                closeLightbox();
+            }
+
+        });
+
+
+    /* ESC KEY */
+    document.addEventListener('keydown', function(event) {
+
+        if (event.key === 'Escape') {
+            closeLightbox();
+        }
+
+    });
+
+
+    /* PHOTO ERROR */
+    function imageError(img) {
+
+        img.classList.add('error');
+
+        const errorBox =
+            img.parentElement.querySelector('.image-error');
+
+        if (errorBox) {
+            errorBox.style.display = 'flex';
+        }
+    }
+
+</script>
+
+</body>
+</html>
+```
