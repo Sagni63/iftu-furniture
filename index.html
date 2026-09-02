@@ -322,1749 +322,592 @@ footer{
 <body>
 
 <!-- ================= HEADER ================= -->
-
 <header>
-
 <div class="brand">
-
-<img
-id="siteLogo"
-src="logo.jpg"
-class="logo"
-alt="IFTU FURNITURE">
-
+<img id="siteLogo" src="https://via.placeholder.com/58" class="logo" alt="IFTU FURNITURE">
 <div>
 <h2>IFTU FURNITURE</h2>
-<small id="brandText">
-Furniture Marketplace
-</small>
+<small id="brandText">Furniture Marketplace</small>
 </div>
-
 </div>
-
 
 <nav>
+<button class="gray" onclick="setLanguage('en')">EN</button>
+<button class="gray" onclick="setLanguage('am')">አማ</button>
+<button class="gray" onclick="setLanguage('om')">OR</button>
+<button class="gray" onclick="toggleTheme()">🌙 / ☀️</button>
 
-<button class="gray"
-onclick="setLanguage('en')">
-EN
-</button>
-
-<button class="gray"
-onclick="setLanguage('am')">
-አማ
-</button>
-
-<button class="gray"
-onclick="setLanguage('om')">
-OR
-</button>
-
-<button class="gray"
-onclick="toggleTheme()">
-🌙 / ☀️
-</button>
-
-<!-- OWNER -->
-
-<button
-id="logoButton"
-class="gray"
-onclick="changeLogo()"
-style="display:none">
-🖼️ Change Logo
-</button>
-
-<button
-id="addButton"
-class="gold"
-onclick="openPost()"
-style="display:none">
-＋ Add Post
-</button>
-
-<button
-id="loginButton"
-class="gray"
-onclick="openLogin()">
-👤 Owner Login
-</button>
-
-<button
-id="logoutButton"
-class="gray"
-onclick="logout()"
-style="display:none">
-Logout
-</button>
-
+<button id="logoButton" class="gray" onclick="changeLogo()" style="display:none">🖼️ Change Logo</button>
+<button id="addButton" class="gold" onclick="openPost()" style="display:none">＋ Add Post</button>
+<button id="loginButton" class="gray" onclick="openLogin()">👤 Owner Login</button>
+<button id="logoutButton" class="gray" onclick="logout()" style="display:none">Logout</button>
 </nav>
-
 </header>
 
-
 <!-- ================= HERO ================= -->
-
 <section class="hero">
-
 <div>
-
-<h1 id="heroTitle">
-Find Your Perfect Furniture
-</h1>
-
-<p id="heroText">
-Buy, sell and discover beautiful furniture
-for your home and office.
-</p>
-
-<button
-class="gold"
-onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
-Shop Furniture
-</button>
-
+<h1 id="heroTitle">Find Your Perfect Furniture</h1>
+<p id="heroText">Buy, sell and discover beautiful furniture for your home and office.</p>
+<button class="gold" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Furniture</button>
 </div>
-
 </section>
 
-
 <!-- ================= MAIN ================= -->
-
 <main class="container">
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:10px">
-
-<h2 id="latestTitle">
-Latest Furniture
-</h2>
-
-<span
-id="status"
-class="muted">
-👤 Visitor
-</span>
-
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+<h2 id="latestTitle">Latest Furniture</h2>
+<span id="status" class="muted">👤 Visitor</span>
 </div>
-
 
 <!-- SEARCH -->
-
 <div class="search">
-
-<input
-id="search"
-placeholder="Search furniture..."
-oninput="render()">
-
-<button
-class="gold"
-onclick="render()">
-🔎 Search
-</button>
-
+<input id="search" placeholder="Search furniture..." oninput="render()">
+<button class="gold" onclick="render()">🔎 Search</button>
 </div>
-
 
 <!-- CATEGORY -->
-
 <div class="categories">
-
-<button
-class="gold"
-onclick="setCategory('all')">
-All
-</button>
-
-<button
-class="gray"
-onclick="setCategory('sofa')">
-🛋️ Sofa
-</button>
-
-<button
-class="gray"
-onclick="setCategory('bed')">
-🛏️ Bed
-</button>
-
-<button
-class="gray"
-onclick="setCategory('table')">
-🪑 Table
-</button>
-
-<button
-class="gray"
-onclick="setCategory('chair')">
-💺 Chair
-</button>
-
-<button
-class="gray"
-onclick="setCategory('office')">
-💻 Office
-</button>
-
+<button class="gold" onclick="setCategory('all')">All</button>
+<button class="gray" onclick="setCategory('sofa')">🛋️ Sofa</button>
+<button class="gray" onclick="setCategory('bed')">🛏️ Bed</button>
+<button class="gray" onclick="setCategory('table')">🪑 Table</button>
+<button class="gray" onclick="setCategory('chair')">💺 Chair</button>
+<button class="gray" onclick="setCategory('office')">💻 Office</button>
 </div>
 
-
-<div
-id="products"
-class="products">
-</div>
-
+<div id="products" class="products"></div>
 </main>
 
-
 <!-- ================= LOGIN ================= -->
-
-<div
-id="loginModal"
-class="modal">
-
+<div id="loginModal" class="modal">
 <div class="box form">
-
-<span
-class="close"
-onclick="closeModal('loginModal')">
-×
-</span>
-
+<span class="close" onclick="closeModal('loginModal')">×</span>
 <h2>👤 Owner Login</h2>
-
-<p class="muted">
-Only the owner can create posts and change the logo.
-</p>
+<p class="muted">Only the owner can create posts and change the logo.</p>
 
 <label>Owner Name</label>
-
-<input
-id="ownerName"
-placeholder="Owner name">
-
+<input id="ownerName" placeholder="Owner name">
 
 <label>Password</label>
+<input id="ownerPassword" type="password" placeholder="Password">
 
-<input
-id="ownerPassword"
-type="password"
-placeholder="Password">
-
-
-<button
-class="gold"
-style="width:100%;margin-top:18px"
-onclick="login()">
-Login
-</button>
-
+<button class="gold" style="width:100%;margin-top:18px" onclick="login()">Login</button>
 </div>
-
 </div>
-
 
 <!-- ================= ADD POST ================= -->
-
-<div
-id="postModal"
-class="modal">
-
+<div id="postModal" class="modal">
 <div class="box form">
-
-<span
-class="close"
-onclick="closeModal('postModal')">
-×
-</span>
-
+<span class="close" onclick="closeModal('postModal')">×</span>
 <h2>＋ Add Furniture Post</h2>
 
-
 <label>Furniture Name</label>
-
-<input
-id="postName"
-placeholder="Modern Sofa">
-
+<input id="postName" placeholder="Modern Sofa">
 
 <label>💰 Price ETB</label>
-
-<input
-id="postPrice"
-type="number"
-placeholder="35000">
-
+<input id="postPrice" type="number" placeholder="35000">
 
 <label>📍 Location</label>
-
-<input
-id="postLocation"
-placeholder="GPS location will appear here">
-
+<input id="postLocation" placeholder="GPS location will appear here">
 
 <!-- GPS -->
-
 <div class="gps-box">
-
-<button
-class="gold"
-onclick="getGPS()">
-📡 Get My GPS Location
-</button>
-
-<div
-id="gpsStatus"
-class="muted"
-style="margin-top:8px">
-GPS not selected
+<button class="gold" onclick="getGPS()">📡 Get My GPS Location</button>
+<div id="gpsStatus" class="muted" style="margin-top:8px">GPS not selected</div>
+<div id="coordinates" class="coords"></div>
+<a id="mapLink" class="map-link" target="_blank">🗺️ View My Location on Google Maps</a>
 </div>
-
-<div
-id="coordinates"
-class="coords">
-</div>
-
-<a
-id="mapLink"
-class="map-link"
-target="_blank">
-🗺️ View My Location on Google Maps
-</a>
-
-</div>
-
 
 <label>🛋️ Category</label>
-
 <select id="postCategory">
-
 <option value="sofa">Sofa</option>
 <option value="bed">Bed</option>
 <option value="table">Table</option>
 <option value="chair">Chair</option>
 <option value="office">Office</option>
-
 </select>
 
-
 <label>📝 Description</label>
-
-<textarea
-id="postDescription"
-rows="4"
-placeholder="Furniture description">
-</textarea>
-
+<textarea id="postDescription" rows="4" placeholder="Furniture description"></textarea>
 
 <label>📸 Furniture Photo</label>
-
 <div class="upload">
-
-<input
-id="postPhoto"
-type="file"
-accept="image/*"
-onchange="previewPhoto(event)">
-
-<img
-id="photoPreview"
-class="preview">
-
+<input id="postPhoto" type="file" accept="image/*" onchange="previewPhoto(event)">
+<img id="photoPreview" class="preview">
 </div>
 
-
-<button
-class="gold"
-style="width:100%;margin-top:18px"
-onclick="publishPost()">
-🚀 POST NOW
-</button>
-
+<button id="submitBtn" class="gold" style="width:100%;margin-top:18px" onclick="publishPost()">🚀 POST NOW</button>
+<div id="uploadStatus" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
 </div>
-
 </div>
-
 
 <!-- ================= CHANGE LOGO ================= -->
-
-<div
-id="logoModal"
-class="modal">
-
+<div id="logoModal" class="modal">
 <div class="box form">
-
-<span
-class="close"
-onclick="closeModal('logoModal')">
-×
-</span>
-
+<span class="close" onclick="closeModal('logoModal')">×</span>
 <h2>🖼️ Change Logo</h2>
+<p class="muted">Only the owner can change the website logo.</p>
 
-<p class="muted">
-Only the owner can change the website logo.
-</p>
+<input id="logoFile" type="file" accept="image/*" onchange="previewLogo(event)">
+<img id="logoPreview" class="preview">
 
-<input
-id="logoFile"
-type="file"
-accept="image/*"
-onchange="previewLogo(event)">
-
-<img
-id="logoPreview"
-class="preview">
-
-<button
-class="gold"
-style="width:100%;margin-top:18px"
-onclick="saveLogo()">
-✅ Save Logo
-</button>
-
+<button id="logoSaveBtn" class="gold" style="width:100%;margin-top:18px" onclick="saveLogo()">✅ Save Logo</button>
 </div>
-
 </div>
-
 
 <!-- ================= FOOTER ================= -->
-
 <footer>
-
 <h2>IFTU FURNITURE</h2>
-
-<p>
-Buy • Sell • Discover
-</p>
+<p>Buy • Sell • Discover</p>
 
 <div class="social">
-
-<button
-onclick="window.open('https://t.me/iftufurniture','_blank')">
-✈️ Telegram
-</button>
-
-<button
-onclick="window.open('https://www.tiktok.com/','_blank')">
-♪ TikTok
-</button>
-
-<button
-onclick="navigator.share ? navigator.share({title:'IFTU FURNITURE',url:location.href}) : navigator.clipboard.writeText(location.href)">
-🔗 Share Website
-</button>
-
+<button onclick="window.open('https://t.me/iftufurniture','_blank')">✈️ Telegram</button>
+<button onclick="window.open('https://www.tiktok.com/','_blank')">♪ TikTok</button>
+<button onclick="navigator.share ? navigator.share({title:'IFTU FURNITURE',url:location.href}) : navigator.clipboard.writeText(location.href)">🔗 Share Website</button>
 </div>
 
-<p style="margin-top:20px">
-© 2026 IFTU FURNITURE
-</p>
-
+<p style="margin-top:20px">© 2026 IFTU FURNITURE</p>
 </footer>
 
-
-<script>
-
-/* =================================================
-   OWNER
-================================================= */
-
-let owner =
-JSON.parse(
-localStorage.getItem("iftuOwner") || "null"
-);
-
-
-/*
-   CHANGE THESE TWO VALUES
-   TO YOUR REAL OWNER LOGIN
-*/
-
-const OWNER_NAME = "iftu";
-const OWNER_PASSWORD = "1234";
-
-
-/* =================================================
-   POSTS
-================================================= */
-
-let posts =
-JSON.parse(
-localStorage.getItem("iftuPosts") || "null"
-) || [];
-
-let selectedCategory = "all";
-
-
-/* =================================================
-   GPS
-================================================= */
-
-let gpsLatitude = null;
-let gpsLongitude = null;
-
-
-/* =================================================
-   SAVE
-================================================= */
-
-function save(){
-
-localStorage.setItem(
-"iftuPosts",
-JSON.stringify(posts)
-);
-
-}
-
-
-/* =================================================
-   ESCAPE
-================================================= */
-
-function safe(text){
-
-const div =
-document.createElement("div");
-
-div.textContent =
-text || "";
-
-return div.innerHTML;
-
-}
-
-
-/* =================================================
-   RENDER
-================================================= */
-
-function render(){
-
-const search =
-document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
-
-
-const list =
-posts.filter(p=>{
-
-const categoryOK =
-selectedCategory === "all"
-||
-p.category === selectedCategory;
-
-
-const searchOK =
-(
-p.name+" "+
-p.location+" "+
-p.description
-)
-.toLowerCase()
-.includes(search);
-
-
-return categoryOK && searchOK;
-
-});
-
-
-const container =
-document.getElementById("products");
-
-
-if(list.length===0){
-
-container.innerHTML=`
-
-<div style="
-grid-column:1/-1;
-text-align:center;
-padding:60px">
-
-<h2>📸 No furniture posts yet</h2>
-
-<p>
-The owner will add furniture photos here.
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-container.innerHTML =
-list.map(p=>{
-
-const isOwner =
-owner &&
-p.ownerId === owner.id;
-
-
-return `
-
-<div class="card">
-
-<div class="card-image">
-
-<img
-src="${p.photo}"
-alt="${safe(p.name)}">
-
-<div class="badge">
-${p.category.toUpperCase()}
-</div>
-
-</div>
-
-
-<div class="info">
-
-<h3>
-${safe(p.name)}
-</h3>
-
-
-<div class="muted">
-👤 ${safe(p.seller)}
-</div>
-
-
-<div class="price">
-${Number(p.price).toLocaleString()} ETB
-</div>
-
-
-<div>
-📍 ${safe(p.location)}
-</div>
-
-
-${
-p.latitude && p.longitude
-
-?
-
-`
-
-<a
-href="https://www.google.com/maps?q=${p.latitude},${p.longitude}"
-target="_blank">
-
-🗺️ View GPS Location
-
-</a>
-
-`
-
-:
-
-""
-
-}
-
-
-<p class="description">
-${safe(p.description)}
-</p>
-
-
-<div class="actions">
-
-
-<button
-class="gray"
-onclick="likePost(${p.id})">
-
-❤️ ${p.likes}
-
-</button>
-
-
-<button
-class="gray"
-onclick="toggleComments(${p.id})">
-
-💬 Comment
-
-</button>
-
-
-<button
-class="gray"
-onclick="toggleShare(${p.id})">
-
-🔗 Share
-
-</button>
-
-
-${
-isOwner
-
-?
-
-`
-
-<button
-class="red"
-onclick="deletePost(${p.id})">
-
-🗑️ Delete
-
-</button>
-
-`
-
-:
-
-""
-
-}
-
-</div>
-
-
-<!-- COMMENTS -->
-
-<div
-id="comments-${p.id}"
-class="comments">
-
-<input
-id="comment-${p.id}"
-class="comment-input"
-placeholder="Write a comment...">
-
-<button
-class="gold"
-style="margin-top:7px"
-onclick="sendComment(${p.id})">
-
-Send
-
-</button>
-
-
-<div>
-
-${(p.comments||[]).map(c=>`
-
-<div class="comment">
-
-<b>
-${safe(c.user)}
-</b>
-
-:
-${safe(c.text)}
-
-</div>
-
-`).join("")}
-
-</div>
-
-</div>
-
-
-<!-- SHARE -->
-
-<div
-id="share-${p.id}"
-class="share">
-
-<button
-onclick="shareTelegram(${p.id})">
-
-✈️ Telegram
-
-</button>
-
-<button
-onclick="shareTikTok(${p.id})">
-
-♪ TikTok
-
-</button>
-
-<button
-onclick="shareWhatsApp(${p.id})">
-
-💬 WhatsApp
-
-</button>
-
-<button
-onclick="copyPost(${p.id})">
-
-🔗 Copy Link
-
-</button>
-
-</div>
-
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
-
-}
-
-
-/* =================================================
-   LIKE
-================================================= */
-
-function likePost(id){
-
-const p =
-posts.find(x=>x.id===id);
-
-if(!p)return;
-
-p.likes++;
-
-save();
-
-render();
-
-}
-
-
-/* =================================================
-   COMMENTS
-================================================= */
-
-function toggleComments(id){
-
-const box =
-document.getElementById(
-"comments-"+id
-);
-
-box.style.display =
-box.style.display==="block"
-?
-"none"
-:
-"block";
-
-}
-
-
-function sendComment(id){
-
-const input =
-document.getElementById(
-"comment-"+id
-);
-
-
-const text =
-input.value.trim();
-
-
-if(!text)return;
-
-
-const p =
-posts.find(x=>x.id===id);
-
-
-p.comments.push({
-
-user:"Visitor",
-
-text:text
-
-});
-
-
-save();
-
-render();
-
-}
-
-
-/* =================================================
-   SHARE
-================================================= */
-
-function toggleShare(id){
-
-const box =
-document.getElementById(
-"share-"+id
-);
-
-box.style.display =
-box.style.display==="block"
-?
-"none"
-:
-"block";
-
-}
-
-
-function postURL(id){
-
-return location.href
-.split("?")[0]
-+
-"?post="
-+
-id;
-
-}
-
-
-function shareTelegram(id){
-
-const p =
-posts.find(x=>x.id===id);
-
-window.open(
-
-"https://t.me/share/url?url="+
-encodeURIComponent(postURL(id))+
-"&text="+
-encodeURIComponent(
-p.name+" - "+p.price+" ETB"
-),
-
-"_blank"
-
-);
-
-}
-
-
-function shareTikTok(id){
-
-copyPost(id);
-
-alert(
-"Post link copied. Open TikTok and share it."
-);
-
-}
-
-
-function shareWhatsApp(id){
-
-const p =
-posts.find(x=>x.id===id);
-
-window.open(
-
-"https://wa.me/?text="+
-encodeURIComponent(
-p.name+
-" - "+
-p.price+
-" ETB\n"+
-postURL(id)
-),
-
-"_blank"
-
-);
-
-}
-
-
-function copyPost(id){
-
-navigator.clipboard.writeText(
-postURL(id)
-);
-
-alert("✅ Post link copied!");
-
-}
-
-
-/* =================================================
-   OWNER LOGIN
-================================================= */
-
-function openLogin(){
-
-document.getElementById(
-"loginModal"
-).style.display="flex";
-
-}
-
-
-function login(){
-
-const name =
-document.getElementById(
-"ownerName"
-).value.trim();
-
-
-const password =
-document.getElementById(
-"ownerPassword"
-).value;
-
-
-if(
-name===OWNER_NAME &&
-password===OWNER_PASSWORD
-){
-
-owner={
-id:"IFTU_OWNER",
-name:name
-};
-
-
-localStorage.setItem(
-"iftuOwner",
-JSON.stringify(owner)
-);
-
-
-closeModal("loginModal");
-
-updateUI();
-
-render();
-
-alert(
-"✅ Owner login successful!"
-);
-
-}else{
-
-alert(
-"❌ Wrong owner name or password"
-);
-
-}
-
-}
-
-
-/* =================================================
-   LOGOUT
-================================================= */
-
-function logout(){
-
-owner=null;
-
-localStorage.removeItem(
-"iftuOwner"
-);
-
-updateUI();
-
-render();
-
-}
-
-
-/* =================================================
-   UPDATE UI
-================================================= */
-
-function updateUI(){
-
-document.getElementById(
-"addButton"
-).style.display =
-owner
-?
-"inline-block"
-:
-"none";
-
-
-document.getElementById(
-"logoButton"
-).style.display =
-owner
-?
-"inline-block"
-:
-"none";
-
-
-document.getElementById(
-"loginButton"
-).style.display =
-owner
-?
-"none"
-:
-"inline-block";
-
-
-document.getElementById(
-"logoutButton"
-).style.display =
-owner
-?
-"inline-block"
-:
-"none";
-
-
-document.getElementById(
-"status"
-).textContent =
-owner
-?
-"👑 Owner: "+owner.name
-:
-"👤 Visitor";
-
-}
-
-
-/* =================================================
-   ADD POST
-================================================= */
-
-function openPost(){
-
-if(!owner){
-
-openLogin();
-
-return;
-
-}
-
-document.getElementById(
-"postModal"
-).style.display="flex";
-
-}
-
-
-function previewPhoto(event){
-
-const file =
-event.target.files[0];
-
-if(!file)return;
-
-
-const reader =
-new FileReader();
-
-
-reader.onload=function(e){
-
-const img =
-document.getElementById(
-"photoPreview"
-);
-
-img.src=e.target.result;
-
-img.style.display="block";
-
-};
-
-
-reader.readAsDataURL(file);
-
-}
-
-
-/* =================================================
-   GPS
-================================================= */
-
-function getGPS(){
-
-if(!navigator.geolocation){
-
-alert(
-"❌ Your browser does not support GPS."
-);
-
-return;
-
-}
-
-
-document.getElementById(
-"gpsStatus"
-).textContent =
-"📡 Getting your GPS location...";
-
-
-navigator.geolocation.getCurrentPosition(
-
-function(position){
-
-gpsLatitude =
-position.coords.latitude;
-
-gpsLongitude =
-position.coords.longitude;
-
-
-document.getElementById(
-"gpsStatus"
-).textContent =
-"✅ GPS Location Found";
-
-
-document.getElementById(
-"coordinates"
-).textContent =
-"Latitude: "+
-gpsLatitude+
-"\nLongitude: "+
-gpsLongitude;
-
-
-const map =
-document.getElementById(
-"mapLink"
-);
-
-
-map.href =
-"https://www.google.com/maps?q="
-+
-gpsLatitude+
-","
-+
-gpsLongitude;
-
-
-map.style.display="block";
-
-
-document.getElementById(
-"postLocation"
-).value =
-gpsLatitude+
-", "+
-gpsLongitude;
-
-},
-
-function(error){
-
-document.getElementById(
-"gpsStatus"
-).textContent =
-"❌ GPS permission denied or location unavailable.";
-
-},
-
-{
-enableHighAccuracy:true,
-timeout:10000,
-maximumAge:0
-}
-
-);
-
-}
-
-
-/* =================================================
-   PUBLISH POST
-================================================= */
-
-function publishPost(){
-
-if(!owner){
-
-alert(
-"❌ Owner only"
-);
-
-return;
-
-}
-
-
-const name =
-document.getElementById(
-"postName"
-).value.trim();
-
-
-const price =
-Number(
-document.getElementById(
-"postPrice"
-).value
-);
-
-
-const location =
-document.getElementById(
-"postLocation"
-).value.trim();
-
-
-const category =
-document.getElementById(
-"postCategory"
-).value;
-
-
-const description =
-document.getElementById(
-"postDescription"
-).value.trim();
-
-
-const photo =
-document.getElementById(
-"postPhoto"
-).files[0];
-
-
-if(
-!name ||
-!price ||
-!location ||
-!photo
-){
-
-alert(
-"Furniture name, price, location and photo are required."
-);
-
-return;
-
-}
-
-
-const reader =
-new FileReader();
-
-
-reader.onload=function(e){
-
-posts.unshift({
-
-id:Date.now(),
-
-ownerId:
-owner.id,
-
-seller:
-owner.name,
-
-name:name,
-
-price:price,
-
-location:location,
-
-category:category,
-
-description:
-description,
-
-photo:
-e.target.result,
-
-latitude:
-gpsLatitude,
-
-longitude:
-gpsLongitude,
-
-likes:0,
-
-comments:[]
-
-});
-
-
-save();
-
-clearPostForm();
-
-closeModal(
-"postModal"
-);
-
-render();
-
-alert(
-"✅ Furniture post published!"
-);
-
-};
-
-
-reader.readAsDataURL(photo);
-
-}
-
-
-/* =================================================
-   CLEAR
-================================================= */
-
-function clearPostForm(){
-
-document.getElementById(
-"postName"
-).value="";
-
-document.getElementById(
-"postPrice"
-).value="";
-
-document.getElementById(
-"postLocation"
-).value="";
-
-document.getElementById(
-"postDescription"
-).value="";
-
-document.getElementById(
-"postPhoto"
-).value="";
-
-document.getElementById(
-"photoPreview"
-).style.display="none";
-
-
-gpsLatitude=null;
-
-gpsLongitude=null;
-
-
-document.getElementById(
-"gpsStatus"
-).textContent=
-"GPS not selected";
-
-
-document.getElementById(
-"coordinates"
-).textContent="";
-
-
-document.getElementById(
-"mapLink"
-).style.display="none";
-
-}
-
-
-/* =================================================
-   DELETE
-================================================= */
-
-function deletePost(id){
-
-const p =
-posts.find(x=>x.id===id);
-
-
-if(
-!owner ||
-!p ||
-p.ownerId!==owner.id
-){
-
-alert(
-"❌ Owner only"
-);
-
-return;
-
-}
-
-
-if(
-confirm(
-"Delete this furniture post?"
-)
-){
-
-posts =
-posts.filter(
-x=>x.id!==id
-);
-
-save();
-
-render();
-
-}
-
-}
-
-
-/* =================================================
-   CATEGORY
-================================================= */
-
-function setCategory(cat){
-
-selectedCategory=cat;
-
-render();
-
-}
-
-
-/* =================================================
-   LOGO CHANGE
-================================================= */
-
-function changeLogo(){
-
-if(!owner){
-
-openLogin();
-
-return;
-
-}
-
-document.getElementById(
-"logoModal"
-).style.display="flex";
-
-}
-
-
-function previewLogo(event){
-
-const file =
-event.target.files[0];
-
-if(!file)return;
-
-
-const reader =
-new FileReader();
-
-
-reader.onload=function(e){
-
-const img =
-document.getElementById(
-"logoPreview"
-);
-
-img.src=e.target.result;
-
-img.style.display="block";
-
-};
-
-
-reader.readAsDataURL(file);
-
-}
-
-
-function saveLogo(){
-
-const file =
-document.getElementById(
-"logoFile"
-).files[0];
-
-
-if(!file){
-
-alert(
-"Please choose a logo."
-);
-
-return;
-
-}
-
-
-const reader =
-new FileReader();
-
-
-reader.onload=function(e){
-
-localStorage.setItem(
-"iftuLogo",
-e.target.result
-);
-
-
-document.getElementById(
-"siteLogo"
-).src =
-e.target.result;
-
-
-closeModal("logoModal");
-
-
-alert(
-"✅ Logo changed successfully!"
-);
-
-};
-
-
-reader.readAsDataURL(file);
-
-}
-
-
-/* =================================================
-   THEME
-================================================= */
-
-function toggleTheme(){
-
-document.body.classList.toggle(
-"dark"
-);
-
-localStorage.setItem(
-"iftuTheme",
-
-document.body.classList.contains("dark")
-?
-"dark"
-:
-"light"
-
-);
-
-}
-
-
-/* =================================================
-   LANGUAGE
-================================================= */
-
-function setLanguage(lang){
-
-const translations={
-
-en:{
-title:"Find Your Perfect Furniture",
-text:"Buy, sell and discover beautiful furniture for your home and office.",
-latest:"Latest Furniture"
-},
-
-am:{
-title:"የሚወዱትን የቤት እቃ ያግኙ",
-text:"የቤት እቃዎችን ይግዙ፣ ይሽጡ እና ያግኙ።",
-latest:"የቅርብ ጊዜ የቤት እቃዎች"
-},
-
-om:{
-title:"Meeshaa Manaa Jaalattu Argadhu",
-text:"Meeshaalee manaa bitaa, gurguri fi argadhu.",
-latest:"Meeshaalee Manaa Haaraa"
-}
-
-};
-
-
-const t =
-translations[lang];
-
-
-document.getElementById(
-"heroTitle"
-).textContent=t.title;
-
-
-document.getElementById(
-"heroText"
-).textContent=t.text;
-
-
-document.getElementById(
-"latestTitle"
-).textContent=t.latest;
-
-}
-
-
-/* =================================================
-   MODAL
-================================================= */
-
-function closeModal(id){
-
-document.getElementById(
-id
-).style.display="none";
-
-}
-
-
-/* =================================================
-   LOAD
-================================================= */
-
-const savedLogo =
-localStorage.getItem("iftuLogo");
-
-
-if(savedLogo){
-
-document.getElementById(
-"siteLogo"
-).src=savedLogo;
-
-}
-
-
-if(
-localStorage.getItem("iftuTheme")
-==="dark"
-){
-
-document.body.classList.add("dark");
-
-}
-
-
-updateUI();
-
-render();
-
+<!-- ================= FIREBASE & LOGIC ================= -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyB8N-OVHB9I0wvPDgRH35vsnbTFb57hI64",
+    authDomain: "iftu-furniture.firebaseapp.com",
+    projectId: "iftu-furniture",
+    storageBucket: "iftu-furniture.firebasestorage.app",
+    messagingSenderId: "414683320804",
+    appId: "1:414683320804:web:0514acf72834fda366b7f1",
+    measurementId: "G-7FHHWVE0E2"
+  };
+
+  // Cloudinary Config
+  const CLOUD_NAME = "ufxl4p3u";
+  const UPLOAD_PRESET = "Ibi1zdbr";
+
+  // Init Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let owner = JSON.parse(localStorage.getItem("iftuOwner") || "null");
+  const OWNER_NAME = "iftu";
+  const OWNER_PASSWORD = "1234";
+
+  let posts = [];
+  let selectedCategory = "all";
+  let gpsLatitude = null;
+  let gpsLongitude = null;
+
+  function safe(text){
+    const div = document.createElement("div");
+    div.textContent = text || "";
+    return div.innerHTML;
+  }
+
+  // Load Posts from Firebase
+  async function fetchPosts() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "posts"));
+      posts = [];
+      querySnapshot.forEach((docSnap) => {
+        posts.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      render();
+    } catch(e) {
+      console.error("Error fetching posts:", e);
+    }
+  }
+
+  window.render = function(){
+    const search = document.getElementById("search").value.toLowerCase().trim();
+    const list = posts.filter(p => {
+      const categoryOK = selectedCategory === "all" || p.category === selectedCategory;
+      const searchOK = (p.name + " " + p.location + " " + p.description).toLowerCase().includes(search);
+      return categoryOK && searchOK;
+    });
+
+    const container = document.getElementById("products");
+
+    if(list.length === 0){
+      container.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:60px">
+          <h2>📸 No furniture posts yet</h2>
+          <p>The owner will add furniture photos here.</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = list.map(p => {
+      const isOwner = owner && p.ownerId === owner.id;
+      return `
+        <div class="card">
+          <div class="card-image">
+            <img src="${p.photo}" alt="${safe(p.name)}">
+            <div class="badge">${(p.category || 'GENERAL').toUpperCase()}</div>
+          </div>
+          <div class="info">
+            <h3>${safe(p.name)}</h3>
+            <div class="muted">👤 ${safe(p.seller)}</div>
+            <div class="price">${Number(p.price).toLocaleString()} ETB</div>
+            <div>📍 ${safe(p.location)}</div>
+            ${p.latitude && p.longitude ? `<a href="https://www.google.com/maps?q=${p.latitude},${p.longitude}" target="_blank">🗺️ View GPS Location</a>` : ""}
+            <p class="description">${safe(p.description)}</p>
+            <div class="actions">
+              <button class="gray" onclick="likePost('${p.id}')">❤️ ${p.likes || 0}</button>
+              <button class="gray" onclick="toggleComments('${p.id}')">💬 Comment</button>
+              <button class="gray" onclick="toggleShare('${p.id}')">🔗 Share</button>
+              ${isOwner ? `<button class="red" onclick="deletePost('${p.id}')">🗑️ Delete</button>` : ""}
+            </div>
+
+            <!-- COMMENTS -->
+            <div id="comments-${p.id}" class="comments">
+              <input id="comment-${p.id}" class="comment-input" placeholder="Write a comment...">
+              <button class="gold" style="margin-top:7px" onclick="sendComment('${p.id}')">Send</button>
+              <div>
+                ${(p.comments||[]).map(c=>`
+                  <div class="comment"><b>${safe(c.user)}</b>: ${safe(c.text)}</div>
+                `).join("")}
+              </div>
+            </div>
+
+            <!-- SHARE -->
+            <div id="share-${p.id}" class="share">
+              <button onclick="shareTelegram('${p.id}')">✈️ Telegram</button>
+              <button onclick="shareTikTok('${p.id}')">♪ TikTok</button>
+              <button onclick="shareWhatsApp('${p.id}')">💬 WhatsApp</button>
+              <button onclick="copyPost('${p.id}')">🔗 Copy Link</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  };
+
+  // Like Action
+  window.likePost = async function(id){
+    const p = posts.find(x => x.id === id);
+    if(!p) return;
+    p.likes = (p.likes || 0) + 1;
+    render();
+    try {
+      await updateDoc(doc(db, "posts", id), { likes: p.likes });
+    } catch(e){ console.error(e); }
+  };
+
+  // Comment Actions
+  window.toggleComments = function(id){
+    const box = document.getElementById("comments-" + id);
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  };
+
+  window.sendComment = async function(id){
+    const input = document.getElementById("comment-" + id);
+    const text = input.value.trim();
+    if(!text) return;
+
+    const newComment = { user: "Visitor", text: text };
+    const p = posts.find(x => x.id === id);
+    if(p) {
+      if(!p.comments) p.comments = [];
+      p.comments.push(newComment);
+      render();
+    }
+    input.value = "";
+    try {
+      await updateDoc(doc(db, "posts", id), { comments: arrayUnion(newComment) });
+    } catch(e){ console.error(e); }
+  };
+
+  // Share Actions
+  window.toggleShare = function(id){
+    const box = document.getElementById("share-" + id);
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  };
+
+  function postURL(id){ return location.href.split("?")[0] + "?post=" + id; }
+
+  window.shareTelegram = function(id){
+    const p = posts.find(x => x.id === id);
+    window.open("https://t.me/share/url?url=" + encodeURIComponent(postURL(id)) + "&text=" + encodeURIComponent(p.name + " - " + p.price + " ETB"), "_blank");
+  };
+
+  window.shareTikTok = function(id){
+    window.copyPost(id);
+    alert("Post link copied. Open TikTok and share it.");
+  };
+
+  window.shareWhatsApp = function(id){
+    const p = posts.find(x => x.id === id);
+    window.open("https://wa.me/?text=" + encodeURIComponent(p.name + " - " + p.price + " ETB\n" + postURL(id)), "_blank");
+  };
+
+  window.copyPost = function(id){
+    navigator.clipboard.writeText(postURL(id));
+    alert("✅ Post link copied!");
+  };
+
+  // Login / Logout
+  window.openLogin = function(){ document.getElementById("loginModal").style.display = "flex"; };
+
+  window.login = function(){
+    const name = document.getElementById("ownerName").value.trim();
+    const password = document.getElementById("ownerPassword").value;
+    if(name === OWNER_NAME && password === OWNER_PASSWORD){
+      owner = { id: "IFTU_OWNER", name: name };
+      localStorage.setItem("iftuOwner", JSON.stringify(owner));
+      window.closeModal("loginModal");
+      updateUI();
+      render();
+      alert("✅ Owner login successful!");
+    } else {
+      alert("❌ Wrong owner name or password");
+    }
+  };
+
+  window.logout = function(){
+    owner = null;
+    localStorage.removeItem("iftuOwner");
+    updateUI();
+    render();
+  };
+
+  function updateUI(){
+    document.getElementById("addButton").style.display = owner ? "inline-block" : "none";
+    document.getElementById("logoButton").style.display = owner ? "inline-block" : "none";
+    document.getElementById("loginButton").style.display = owner ? "none" : "inline-block";
+    document.getElementById("logoutButton").style.display = owner ? "inline-block" : "none";
+    document.getElementById("status").textContent = owner ? "👑 Owner: " + owner.name : "👤 Visitor";
+  }
+
+  // Add Post Modal
+  window.openPost = function(){
+    if(!owner){ window.openLogin(); return; }
+    document.getElementById("postModal").style.display = "flex";
+  };
+
+  window.previewPhoto = function(event){
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const img = document.getElementById("photoPreview");
+      img.src = e.target.result;
+      img.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // GPS Location
+  window.getGPS = function(){
+    if(!navigator.geolocation){ alert("❌ Your browser does not support GPS."); return; }
+    document.getElementById("gpsStatus").textContent = "📡 Getting your GPS location...";
+    navigator.geolocation.getCurrentPosition(
+      function(position){
+        gpsLatitude = position.coords.latitude;
+        gpsLongitude = position.coords.longitude;
+        document.getElementById("gpsStatus").textContent = "✅ GPS Location Found";
+        document.getElementById("coordinates").textContent = "Latitude: " + gpsLatitude + "\nLongitude: " + gpsLongitude;
+        const map = document.getElementById("mapLink");
+        map.href = "https://www.google.com/maps?q=" + gpsLatitude + "," + gpsLongitude;
+        map.style.display = "block";
+        document.getElementById("postLocation").value = gpsLatitude + ", " + gpsLongitude;
+      },
+      function(error){ document.getElementById("gpsStatus").textContent = "❌ GPS permission denied or location unavailable."; },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  };
+
+  // Publish Post (Uploads image to Cloudinary, Metadata to Firebase)
+  window.publishPost = async function(){
+    if(!owner){ alert("❌ Owner only"); return; }
+
+    const name = document.getElementById("postName").value.trim();
+    const price = Number(document.getElementById("postPrice").value);
+    const locationVal = document.getElementById("postLocation").value.trim();
+    const category = document.getElementById("postCategory").value;
+    const description = document.getElementById("postDescription").value.trim();
+    const photoFile = document.getElementById("postPhoto").files[0];
+
+    if(!name || !price || !locationVal || !photoFile){
+      alert("Furniture name, price, location and photo are required.");
+      return;
+    }
+
+    const statusDiv = document.getElementById("uploadStatus");
+    const submitBtn = document.getElementById("submitBtn");
+    statusDiv.style.color = "blue";
+    statusDiv.textContent = "⏳ Uploading photo to Cloudinary...";
+    submitBtn.disabled = true;
+
+    try {
+      // 1. Image upload to Cloudinary
+      const formData = new FormData();
+      formData.append('file', photoFile);
+      formData.append('upload_preset', UPLOAD_PRESET);
+
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const fileData = await res.json();
+
+      if(!fileData.secure_url) throw new Error("Image upload failed");
+
+      // 2. Save metadata to Firestore
+      statusDiv.textContent = "💾 Saving post to Firebase...";
+      await addDoc(collection(db, "posts"), {
+        ownerId: owner.id,
+        seller: owner.name,
+        name: name,
+        price: price,
+        location: locationVal,
+        category: category,
+        description: description,
+        photo: fileData.secure_url,
+        latitude: gpsLatitude,
+        longitude: gpsLongitude,
+        likes: 0,
+        comments: [],
+        createdAt: new Date()
+      });
+
+      statusDiv.style.color = "green";
+      statusDiv.textContent = "✅ Post published successfully!";
+      
+      clearPostForm();
+      window.closeModal("postModal");
+      fetchPosts();
+
+    } catch(err) {
+      console.error(err);
+      statusDiv.style.color = "red";
+      statusDiv.textContent = "❌ Error uploading post: " + err.message;
+    } finally {
+      submitBtn.disabled = false;
+    }
+  };
+
+  function clearPostForm(){
+    document.getElementById("postName").value = "";
+    document.getElementById("postPrice").value = "";
+    document.getElementById("postLocation").value = "";
+    document.getElementById("postDescription").value = "";
+    document.getElementById("postPhoto").value = "";
+    document.getElementById("photoPreview").style.display = "none";
+    document.getElementById("uploadStatus").textContent = "";
+    gpsLatitude = null;
+    gpsLongitude = null;
+    document.getElementById("gpsStatus").textContent = "GPS not selected";
+    document.getElementById("coordinates").textContent = "";
+    document.getElementById("mapLink").style.display = "none";
+  }
+
+  // Delete Post
+  window.deletePost = async function(id){
+    const p = posts.find(x => x.id === id);
+    if(!owner || !p || p.ownerId !== owner.id){
+      alert("❌ Owner only");
+      return;
+    }
+
+    if(confirm("Delete this furniture post?")){
+      try {
+        await deleteDoc(doc(db, "posts", id));
+        fetchPosts();
+      } catch(e){
+        console.error("Delete failed:", e);
+      }
+    }
+  };
+
+  window.setCategory = function(cat){
+    selectedCategory = cat;
+    render();
+  };
+
+  // Logo handling
+  window.changeLogo = function(){
+    if(!owner){ window.openLogin(); return; }
+    document.getElementById("logoModal").style.display = "flex";
+  };
+
+  window.previewLogo = function(event){
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const img = document.getElementById("logoPreview");
+      img.src = e.target.result;
+      img.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.saveLogo = async function(){
+    const file = document.getElementById("logoFile").files[0];
+    if(!file){ alert("Please choose a logo."); return; }
+
+    const logoBtn = document.getElementById("logoSaveBtn");
+    logoBtn.disabled = true;
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', UPLOAD_PRESET);
+
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const fileData = await res.json();
+
+      if(fileData.secure_url){
+        localStorage.setItem("iftuLogo", fileData.secure_url);
+        document.getElementById("siteLogo").src = fileData.secure_url;
+        window.closeModal("logoModal");
+        alert("✅ Logo changed successfully!");
+      }
+    } catch(e) {
+      alert("Failed to upload logo.");
+    } finally {
+      logoBtn.disabled = false;
+    }
+  };
+
+  window.toggleTheme = function(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem("iftuTheme", document.body.classList.contains("dark") ? "dark" : "light");
+  };
+
+  window.setLanguage = function(lang){
+    const translations = {
+      en:{ title:"Find Your Perfect Furniture", text:"Buy, sell and discover beautiful furniture for your home and office.", latest:"Latest Furniture" },
+      am:{ title:"የሚወዱትን የቤት እቃ ያግኙ", text:"የቤት እቃዎችን ይግዙ፣ ይሽጡ እና ያግኙ።", latest:"የቅርብ ጊዜ የቤት እቃዎች" },
+      om:{ title:"Meeshaa Manaa Jaalattu Argadhu", text:"Meeshaalee manaa bitaa, gurguri fi argadhu.", latest:"Meeshaalee Manaa Haaraa" }
+    };
+    const t = translations[lang];
+    document.getElementById("heroTitle").textContent = t.title;
+    document.getElementById("heroText").textContent = t.text;
+    document.getElementById("latestTitle").textContent = t.latest;
+  };
+
+  window.closeModal = function(id){
+    document.getElementById(id).style.display = "none";
+  };
+
+  // Init
+  const savedLogo = localStorage.getItem("iftuLogo");
+  if(savedLogo) document.getElementById("siteLogo").src = savedLogo;
+  if(localStorage.getItem("iftuTheme") === "dark") document.body.classList.add("dark");
+
+  updateUI();
+  fetchPosts();
 </script>
 
 </body>
