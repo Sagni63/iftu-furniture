@@ -488,7 +488,7 @@ footer{
 
   // Cloudinary Config
   const CLOUD_NAME = "ufxl4p3u";
-  const UPLOAD_PRESET = "Ibi1zdbr";
+  const UPLOAD_PRESET = "iftu_preset";
 
   // Init Firebase
   const app = initializeApp(firebaseConfig);
@@ -723,7 +723,7 @@ footer{
     );
   };
 
-  // Publish Post (Uploads image to Cloudinary, Metadata to Firebase)
+  // Publish Post
   window.publishPost = async function(){
     if(!owner){ alert("❌ Owner only"); return; }
 
@@ -746,7 +746,6 @@ footer{
     submitBtn.disabled = true;
 
     try {
-      // 1. Image upload to Cloudinary
       const formData = new FormData();
       formData.append('file', photoFile);
       formData.append('upload_preset', UPLOAD_PRESET);
@@ -759,7 +758,6 @@ footer{
 
       if(!fileData.secure_url) throw new Error("Image upload failed");
 
-      // 2. Save metadata to Firestore
       statusDiv.textContent = "💾 Saving post to Firebase...";
       await addDoc(collection(db, "posts"), {
         ownerId: owner.id,
