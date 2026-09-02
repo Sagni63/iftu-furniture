@@ -1,4 +1,2346 @@
+<!DOCTYPE html>from flask import Flask, request, redirect, url_for, session, render_template_string
+from werkzeug.utils import secure_filename
+import os
+import json
+import uuid
+
+app = Flask(__name__)
+
+# ==============================
+# SETTINGS
+# ==============================
+
+app.secret_key = "IFTUU_SECRET_KEY_CHANGE_THIS"
+
+SELLER_USERNAME = "seller"
+SELLER_PASSWORD = "1234"
+
+PHONE = "0910217822"
+LOCATION = "Gincii & Jelduu"
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
+DATA_FILE = os.path.join(BASE_DIR, "products.json")
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+ALLOWED_EXTENSIONS = {
+    "png",
+    "jpg",
+    "jpeg",
+    "webp",
+    "gif"
+}
+
+
+# ==============================
+# PRODUCTS DATABASE
+# ==============================
+
+def load_products():
+
+    if not os.path.exists(DATA_FILE):
+        return []
+
+    try:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return []
+
+
+def save_products(products):
+
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(
+            products,
+            f,
+            ensure_ascii=False,
+            indent=4
+        )
+
+
+def allowed_file(filename):
+
+    return (
+        "." in filename
+        and filename.rsplit(".", 1)[1].lower()
+        in ALLOWED_EXTENSIONS
+    )
+
+
+# ==============================
+# HTML + CSS + JAVASCRIPT
+# ==============================
+
+HOME_HTML = """
+
 <!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>IFTUU FURNITURE</title>
+
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    background: #080808;
+
+    color: white;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    background: #101010;
+
+    border-bottom: 1px solid #d4af37;
+
+    padding: 18px 6%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.logo {
+
+    color: #d4af37;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+nav a {
+
+    color: white;
+
+    text-decoration: none;
+
+    margin-left: 20px;
+
+    font-size: 15px;
+}
+
+nav a:hover {
+
+    color: #d4af37;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+
+    min-height: 70vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 40px 20px;
+
+    background:
+
+    linear-gradient(
+        rgba(0,0,0,.65),
+        rgba(0,0,0,.85)
+    ),
+
+    url("/static/hero.jpg")
+
+    center/cover no-repeat;
+}
+
+.hero h1 {
+
+    font-size: 55px;
+
+    color: #d4af37;
+
+    margin-bottom: 15px;
+}
+
+.hero p {
+
+    font-size: 20px;
+
+    color: #ddd;
+
+    margin-bottom: 25px;
+}
+
+.btn {
+
+    display: inline-block;
+
+    background: #d4af37;
+
+    color: black;
+
+    text-decoration: none;
+
+    padding: 13px 25px;
+
+    border-radius: 5px;
+
+    font-weight: bold;
+
+    margin: 5px;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.btn:hover {
+
+    background: #f0d76a;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info {
+
+    background: #111;
+
+    text-align: center;
+
+    padding: 25px;
+
+    border-bottom: 1px solid #222;
+}
+
+.info span {
+
+    margin: 10px 20px;
+
+    display: inline-block;
+}
+
+.gold {
+
+    color: #d4af37;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.products {
+
+    padding: 55px 6%;
+}
+
+.title {
+
+    text-align: center;
+
+    color: #d4af37;
+
+    font-size: 35px;
+
+    margin-bottom: 30px;
+}
+
+
+/* SEARCH */
+
+.search {
+
+    max-width: 500px;
+
+    margin: 0 auto 30px;
+}
+
+.search input {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border-radius: 5px;
+
+    border: 1px solid #444;
+
+    background: #151515;
+
+    color: white;
+
+    outline: none;
+}
+
+.search input:focus {
+
+    border-color: #d4af37;
+}
+
+
+/* FILTER */
+
+.filters {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 35px;
+}
+
+.filter {
+
+    background: #171717;
+
+    color: white;
+
+    border: 1px solid #444;
+
+    padding: 10px 20px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.filter:hover,
+.filter.active {
+
+    background: #d4af37;
+
+    color: black;
+
+    border-color: #d4af37;
+}
+
+
+/* PRODUCT GRID */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(260px, 1fr)
+        );
+
+    gap: 25px;
+}
+
+
+/* PRODUCT CARD */
+
+.card {
+
+    background: #121212;
+
+    border: 1px solid #292929;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    transition: .3s;
+}
+
+.card:hover {
+
+    transform: translateY(-7px);
+
+    border-color: #d4af37;
+}
+
+.card img {
+
+    width: 100%;
+
+    height: 250px;
+
+    object-fit: cover;
+
+    cursor: pointer;
+
+    display: block;
+}
+
+.card-body {
+
+    padding: 18px;
+}
+
+.card-body h3 {
+
+    color: #d4af37;
+
+    margin-bottom: 10px;
+}
+
+.card-body p {
+
+    color: #aaa;
+
+    margin-bottom: 12px;
+}
+
+.price {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-bottom: 15px;
+}
+
+.order {
+
+    display: block;
+
+    width: 100%;
+
+    text-align: center;
+
+    padding: 11px;
+
+    background: #d4af37;
+
+    color: black;
+
+    text-decoration: none;
+
+    border-radius: 5px;
+
+    font-weight: bold;
+}
+
+.order:hover {
+
+    background: #f0d76a;
+}
+
+
+/* EMPTY */
+
+.empty {
+
+    text-align: center;
+
+    padding: 50px;
+
+    color: #888;
+
+    display: none;
+}
+
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+.lightbox {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.94);
+
+    display: none;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 5000;
+
+    padding: 20px;
+}
+
+.lightbox img {
+
+    max-width: 95%;
+
+    max-height: 90vh;
+
+    border-radius: 8px;
+}
+
+.close {
+
+    position: absolute;
+
+    right: 30px;
+
+    top: 15px;
+
+    font-size: 45px;
+
+    cursor: pointer;
+
+    color: white;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    background: #050505;
+
+    border-top: 1px solid #d4af37;
+
+    text-align: center;
+
+    padding: 35px 20px;
+
+    margin-top: 30px;
+}
+
+footer h2 {
+
+    color: #d4af37;
+
+    margin-bottom: 10px;
+}
+
+footer p {
+
+    color: #888;
+
+    margin: 7px;
+}
+
+.seller-login {
+
+    margin-top: 20px;
+}
+
+.seller-login a {
+
+    color: #555;
+
+    text-decoration: none;
+
+    font-size: 12px;
+}
+
+.seller-login a:hover {
+
+    color: #d4af37;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px) {
+
+    header {
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    nav a {
+
+        margin: 0 7px;
+    }
+
+    .hero h1 {
+
+        font-size: 38px;
+    }
+
+    .hero p {
+
+        font-size: 16px;
+    }
+
+    .products {
+
+        padding: 40px 15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+        IFTUU FURNITURE
+    </div>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="#products">
+            Products
+        </a>
+
+        <a href="#contact">
+            Contact
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div>
+
+        <h1>
+            IFTUU FURNITURE
+        </h1>
+
+        <p>
+            Quality Furniture for Your Home
+        </p>
+
+        <a
+            href="#products"
+            class="btn">
+            View Products
+        </a>
+
+        <a
+            href="tel:0910217822"
+            class="btn">
+            Call Seller
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     INFORMATION
+========================= -->
+
+<div class="info">
+
+    <span>
+        📍
+        <b class="gold">
+            Location:
+        </b>
+        Gincii & Jelduu
+    </span>
+
+    <span>
+        📞
+        <b class="gold">
+            Phone:
+        </b>
+        0910217822
+    </span>
+
+</div>
+
+
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<section
+    class="products"
+    id="products">
+
+    <h2 class="title">
+        Our Products
+    </h2>
+
+
+    <!-- SEARCH -->
+
+    <div class="search">
+
+        <input
+            id="search"
+            type="text"
+            placeholder="Search furniture..."
+            onkeyup="searchProducts()">
+
+    </div>
+
+
+    <!-- FILTER -->
+
+    <div class="filters">
+
+        <button
+            class="filter active"
+            onclick="filterProducts('all', this)">
+            All
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterProducts('sofa', this)">
+            Sofa
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterProducts('table', this)">
+            Table
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterProducts('storage', this)">
+            Storage
+        </button>
+
+    </div>
+
+
+    <!-- GRID -->
+
+    <div class="grid"
+         id="productGrid">
+
+
+        {% for product in products %}
+
+        <div
+            class="card"
+            data-category="{{ product.category }}"
+            data-name="{{ product.name|lower }}">
+
+            <img
+                src="{{ product.image }}"
+                alt="{{ product.name }}"
+                onclick="openImage(this.src)">
+
+            <div class="card-body">
+
+                <h3>
+                    {{ product.name }}
+                </h3>
+
+                <p>
+                    {{ product.description }}
+                </p>
+
+                {% if product.price %}
+
+                <div class="price">
+                    {{ product.price }}
+                </div>
+
+                {% endif %}
+
+                <a
+                    href="tel:0910217822"
+                    class="order">
+
+                    📞 Order Now
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <div
+        id="empty"
+        class="empty">
+
+        No products found.
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section
+    class="info"
+    id="contact">
+
+    <h2 class="gold">
+        Contact IFTUU FURNITURE
+    </h2>
+
+    <p style="margin-top:15px;">
+        📞 0910217822
+    </p>
+
+    <p>
+        📍 Gincii & Jelduu
+    </p>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <h2>
+        IFTUU FURNITURE
+    </h2>
+
+    <p>
+        Quality • Style • Comfort
+    </p>
+
+    <p>
+        © 2026 IFTUU FURNITURE
+    </p>
+
+
+    <!-- SELLER ONLY -->
+
+    <div class="seller-login">
+
+        <a href="/seller/login">
+            Seller Login
+        </a>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================
+     LIGHTBOX
+========================= -->
+
+<div
+    class="lightbox"
+    id="lightbox"
+    onclick="closeImage()">
+
+    <span class="close">
+        &times;
+    </span>
+
+    <img
+        id="bigImage"
+        src=""
+        onclick="event.stopPropagation()">
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =========================
+   OPEN IMAGE
+========================= */
+
+function openImage(src) {
+
+    document.getElementById(
+        "bigImage"
+    ).src = src;
+
+    document.getElementById(
+        "lightbox"
+    ).style.display = "flex";
+}
+
+
+/* =========================
+   CLOSE IMAGE
+========================= */
+
+function closeImage() {
+
+    document.getElementById(
+        "lightbox"
+    ).style.display = "none";
+}
+
+
+/* =========================
+   CATEGORY FILTER
+========================= */
+
+function filterProducts(category, button) {
+
+    const cards =
+        document.querySelectorAll(
+            ".card"
+        );
+
+    const buttons =
+        document.querySelectorAll(
+            ".filter"
+        );
+
+    buttons.forEach(function(btn) {
+
+        btn.classList.remove(
+            "active"
+        );
+
+    });
+
+    button.classList.add(
+        "active"
+    );
+
+
+    let found = 0;
+
+
+    cards.forEach(function(card) {
+
+        const cardCategory =
+            card.dataset.category;
+
+
+        if (
+            category === "all" ||
+            cardCategory === category
+        ) {
+
+            card.style.display =
+                "block";
+
+            found++;
+
+        } else {
+
+            card.style.display =
+                "none";
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "empty"
+    ).style.display =
+        found === 0
+        ? "block"
+        : "none";
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchProducts() {
+
+    const search =
+        document.getElementById(
+            "search"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const cards =
+        document.querySelectorAll(
+            ".card"
+        );
+
+
+    let found = 0;
+
+
+    cards.forEach(function(card) {
+
+        const name =
+            card.dataset.name || "";
+
+        const category =
+            card.dataset.category || "";
+
+
+        if (
+            name.includes(search) ||
+            category.includes(search)
+        ) {
+
+            card.style.display =
+                "block";
+
+            found++;
+
+        } else {
+
+            card.style.display =
+                "none";
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "empty"
+    ).style.display =
+        found === 0
+        ? "block"
+        : "none";
+
+}
+
+
+/* =========================
+   ESC KEY
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeImage();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
+
+"""
+
+
+# ==============================
+# LOGIN HTML
+# ==============================
+
+LOGIN_HTML = """
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Seller Login</title>
+
+
+<style>
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: #080808;
+
+    color: white;
+
+    font-family: Arial;
+}
+
+.login {
+
+    width: 90%;
+
+    max-width: 400px;
+
+    background: #121212;
+
+    padding: 35px;
+
+    border-radius: 10px;
+
+    border: 1px solid #d4af37;
+}
+
+h1 {
+
+    text-align: center;
+
+    color: #d4af37;
+
+    margin-bottom: 25px;
+}
+
+input {
+
+    width: 100%;
+
+    padding: 13px;
+
+    margin-bottom: 15px;
+
+    box-sizing: border-box;
+
+    background: #080808;
+
+    color: white;
+
+    border: 1px solid #444;
+
+    border-radius: 5px;
+}
+
+button {
+
+    width: 100%;
+
+    padding: 13px;
+
+    background: #d4af37;
+
+    border: none;
+
+    border-radius: 5px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.error {
+
+    color: #ff5555;
+
+    text-align: center;
+
+    margin-bottom: 15px;
+}
+
+.back {
+
+    text-align: center;
+
+    margin-top: 20px;
+}
+
+.back a {
+
+    color: #d4af37;
+
+    text-decoration: none;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="login">
+
+<h1>
+Seller Login
+</h1>
+
+
+{% if error %}
+
+<div class="error">
+    {{ error }}
+</div>
+
+{% endif %}
+
+
+<form method="POST">
+
+<input
+    type="text"
+    name="username"
+    placeholder="Username"
+    required>
+
+
+<input
+    type="password"
+    name="password"
+    placeholder="Password"
+    required>
+
+
+<button type="submit">
+    LOGIN
+</button>
+
+</form>
+
+
+<div class="back">
+
+<a href="/">
+    ← Back to Website
+</a>
+
+</div>
+
+</div>
+
+
+</body>
+
+</html>
+
+"""
+
+
+# ==============================
+# SELLER PANEL
+# ==============================
+
+SELLER_HTML = """
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Seller Panel - IFTUU</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    background: #080808;
+
+    color: white;
+
+    font-family: Arial;
+}
+
+header {
+
+    background: #111;
+
+    border-bottom: 1px solid #d4af37;
+
+    padding: 18px 5%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.logo {
+
+    color: #d4af37;
+
+    font-size: 23px;
+
+    font-weight: bold;
+}
+
+header a {
+
+    color: #d4af37;
+
+    text-decoration: none;
+
+    margin-left: 15px;
+}
+
+.container {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 35px 20px;
+}
+
+h1, h2 {
+
+    color: #d4af37;
+}
+
+.form {
+
+    background: #121212;
+
+    padding: 25px;
+
+    border-radius: 10px;
+
+    border: 1px solid #333;
+
+    margin-bottom: 35px;
+}
+
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-bottom: 14px;
+
+    background: #080808;
+
+    color: white;
+
+    border: 1px solid #444;
+
+    border-radius: 5px;
+}
+
+textarea {
+
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+button {
+
+    padding: 12px 22px;
+
+    background: #d4af37;
+
+    border: none;
+
+    border-radius: 5px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.products {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(230px, 1fr)
+        );
+
+    gap: 20px;
+}
+
+.product {
+
+    background: #121212;
+
+    border: 1px solid #333;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+.product img {
+
+    width: 100%;
+
+    height: 200px;
+
+    object-fit: cover;
+}
+
+.product-body {
+
+    padding: 15px;
+}
+
+.product h3 {
+
+    color: #d4af37;
+}
+
+.actions {
+
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+.actions a {
+
+    text-decoration: none;
+
+    padding: 9px 14px;
+
+    border-radius: 5px;
+
+    color: black;
+
+    background: #d4af37;
+
+    font-size: 13px;
+}
+
+.delete {
+
+    background: #cc3333 !important;
+
+    color: white !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+IFTUU FURNITURE
+</div>
+
+<div>
+
+<a href="/">
+Website
+</a>
+
+<a href="/seller/logout">
+Logout
+</a>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<h1>
+Seller Panel
+</h1>
+
+<p>
+Only you can add, edit and delete products.
+</p>
+
+
+<!-- ADD PRODUCT -->
+
+<div class="form">
+
+<h2>
+Add New Product
+</h2>
+
+
+<form
+    action="/seller/add"
+    method="POST"
+    enctype="multipart/form-data">
+
+
+<input
+    type="text"
+    name="name"
+    placeholder="Product name"
+    required>
+
+
+<select
+    name="category"
+    required>
+
+<option value="">
+Select category
+</option>
+
+<option value="sofa">
+Sofa
+</option>
+
+<option value="table">
+Table
+</option>
+
+<option value="storage">
+Storage
+</option>
+
+</select>
+
+
+<input
+    type="text"
+    name="price"
+    placeholder="Price">
+
+
+<textarea
+    name="description"
+    placeholder="Product description"></textarea>
+
+
+<input
+    type="file"
+    name="photo"
+    accept="image/*"
+    required>
+
+
+<button type="submit">
+➕ Add Product
+</button>
+
+
+</form>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<h2>
+Your Products
+</h2>
+
+
+<div class="products">
+
+
+{% for product in products %}
+
+
+<div class="product">
+
+
+<img
+    src="{{ product.image }}"
+    alt="{{ product.name }}">
+
+
+<div class="product-body">
+
+
+<h3>
+{{ product.name }}
+</h3>
+
+
+<p>
+{{ product.description }}
+</p>
+
+
+<p>
+<b>
+{{ product.price }}
+</b>
+</p>
+
+
+<div class="actions">
+
+<a href="/seller/edit/{{ product.id }}">
+✏️ Edit
+</a>
+
+<a
+    class="delete"
+    href="/seller/delete/{{ product.id }}"
+    onclick="return confirm('Delete this product?')">
+
+🗑️ Delete
+
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+{% endfor %}
+
+
+</div>
+
+
+</div>
+
+
+</body>
+
+</html>
+
+"""
+
+
+# ==============================
+# EDIT HTML
+# ==============================
+
+EDIT_HTML = """
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Edit Product</title>
+
+
+<style>
+
+body {
+
+    background: #080808;
+
+    color: white;
+
+    font-family: Arial;
+
+    padding: 30px;
+}
+
+.container {
+
+    max-width: 600px;
+
+    margin: auto;
+
+    background: #121212;
+
+    padding: 30px;
+
+    border-radius: 10px;
+
+    border: 1px solid #d4af37;
+}
+
+h1 {
+
+    color: #d4af37;
+}
+
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-bottom: 15px;
+
+    background: #080808;
+
+    color: white;
+
+    border: 1px solid #444;
+
+    border-radius: 5px;
+
+    box-sizing: border-box;
+}
+
+button {
+
+    background: #d4af37;
+
+    border: none;
+
+    padding: 12px 25px;
+
+    border-radius: 5px;
+
+    font-weight: bold;
+}
+
+img {
+
+    width: 100%;
+
+    max-height: 300px;
+
+    object-fit: cover;
+
+    margin-bottom: 20px;
+}
+
+a {
+
+    color: #d4af37;
+
+    text-decoration: none;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>
+Edit Product
+</h1>
+
+
+<img
+    src="{{ product.image }}"
+    alt="{{ product.name }}">
+
+
+<form
+    method="POST"
+    enctype="multipart/form-data">
+
+
+<input
+    type="text"
+    name="name"
+    value="{{ product.name }}"
+    required>
+
+
+<select
+    name="category">
+
+<option value="sofa"
+{% if product.category == "sofa" %}
+selected
+{% endif %}>
+Sofa
+</option>
+
+<option value="table"
+{% if product.category == "table" %}
+selected
+{% endif %}>
+Table
+</option>
+
+<option value="storage"
+{% if product.category == "storage" %}
+selected
+{% endif %}>
+Storage
+</option>
+
+</select>
+
+
+<input
+    type="text"
+    name="price"
+    value="{{ product.price }}">
+
+
+<textarea
+    name="description">{{ product.description }}</textarea>
+
+
+<input
+    type="file"
+    name="photo"
+    accept="image/*">
+
+
+<button type="submit">
+Save Changes
+</button>
+
+
+</form>
+
+
+<br><br>
+
+<a href="/seller">
+← Back to Seller Panel
+</a>
+
+
+</div>
+
+
+</body>
+
+</html>
+
+"""
+
+
+# ==============================
+# PUBLIC WEBSITE
+# ==============================
+
+@app.route("/")
+def home():
+
+    products = load_products()
+
+    return render_template_string(
+        HOME_HTML,
+        products=products
+    )
+
+
+# ==============================
+# SELLER LOGIN
+# ==============================
+
+@app.route(
+    "/seller/login",
+    methods=["GET", "POST"]
+)
+def seller_login():
+
+    error = None
+
+    if request.method == "POST":
+
+        username = request.form.get(
+            "username",
+            ""
+        )
+
+        password = request.form.get(
+            "password",
+            ""
+        )
+
+
+        if (
+            username == SELLER_USERNAME
+            and
+            password == SELLER_PASSWORD
+        ):
+
+            session["seller"] = True
+
+            return redirect(
+                url_for("seller_panel")
+            )
+
+        else:
+
+            error = "Wrong username or password."
+
+
+    return render_template_string(
+        LOGIN_HTML,
+        error=error
+    )
+
+
+# ==============================
+# SELLER LOGOUT
+# ==============================
+
+@app.route("/seller/logout")
+def seller_logout():
+
+    session.pop("seller", None)
+
+    return redirect(
+        url_for("home")
+    )
+
+
+# ==============================
+# SELLER PANEL
+# ==============================
+
+@app.route("/seller")
+def seller_panel():
+
+    if not session.get("seller"):
+
+        return redirect(
+            url_for("seller_login")
+        )
+
+
+    products = load_products()
+
+    return render_template_string(
+        SELLER_HTML,
+        products=products
+    )
+
+
+# ==============================
+# ADD PRODUCT
+# ==============================
+
+@app.route(
+    "/seller/add",
+    methods=["POST"]
+)
+def add_product():
+
+    if not session.get("seller"):
+
+        return redirect(
+            url_for("seller_login")
+        )
+
+
+    name = request.form.get(
+        "name",
+        ""
+    ).strip()
+
+    category = request.form.get(
+        "category",
+        ""
+    ).strip()
+
+    price = request.form.get(
+        "price",
+        ""
+    ).strip()
+
+    description = request.form.get(
+        "description",
+        ""
+    ).strip()
+
+    photo = request.files.get(
+        "photo"
+    )
+
+
+    if not name or not photo:
+
+        return "Product name and photo are required."
+
+
+    if not allowed_file(
+        photo.filename
+    ):
+
+        return "Invalid image format."
+
+
+    extension = photo.filename.rsplit(
+        ".",
+        1
+    )[1].lower()
+
+
+    filename = (
+        str(uuid.uuid4())
+        + "."
+        + extension
+    )
+
+
+    filepath = os.path.join(
+        UPLOAD_FOLDER,
+        filename
+    )
+
+
+    photo.save(filepath)
+
+
+    products = load_products()
+
+
+    product = {
+
+        "id": str(uuid.uuid4()),
+
+        "name": name,
+
+        "category": category,
+
+        "price": price,
+
+        "description": description,
+
+        "image":
+            "/static/uploads/"
+            + filename
+    }
+
+
+    products.append(product)
+
+    save_products(products)
+
+
+    return redirect(
+        url_for("seller_panel")
+    )
+
+
+# ==============================
+# EDIT PRODUCT
+# ==============================
+
+@app.route(
+    "/seller/edit/<product_id>",
+    methods=["GET", "POST"]
+)
+def edit_product(product_id):
+
+    if not session.get("seller"):
+
+        return redirect(
+            url_for("seller_login")
+        )
+
+
+    products = load_products()
+
+
+    product = next(
+        (
+            p for p in products
+            if p["id"] == product_id
+        ),
+        None
+    )
+
+
+    if product is None:
+
+        return "Product not found."
+
+
+    if request.method == "POST":
+
+        product["name"] = request.form.get(
+            "name",
+            ""
+        ).strip()
+
+        product["category"] = request.form.get(
+            "category",
+            ""
+        ).strip()
+
+        product["price"] = request.form.get(
+            "price",
+            ""
+        ).strip()
+
+        product["description"] = request.form.get(
+            "description",
+            ""
+        ).strip()
+
+
+        photo = request.files.get(
+            "photo"
+        )
+
+
+        if (
+            photo
+            and
+            photo.filename
+        ):
+
+            if allowed_file(
+                photo.filename
+            ):
+
+                old_image = product.get(
+                    "image",
+                    ""
+                )
+
+
+                old_filename = os.path.basename(
+                    old_image
+                )
+
+
+                old_path = os.path.join(
+                    UPLOAD_FOLDER,
+                    old_filename
+                )
+
+
+                if os.path.exists(old_path):
+
+                    try:
+                        os.remove(old_path)
+                    except:
+                        pass
+
+
+                extension = photo.filename.rsplit(
+                    ".",
+                    1
+                )[1].lower()
+
+
+                filename = (
+                    str(uuid.uuid4())
+                    + "."
+                    + extension
+                )
+
+
+                photo.save(
+                    os.path.join(
+                        UPLOAD_FOLDER,
+                        filename
+                    )
+                )
+
+
+                product["image"] = (
+                    "/static/uploads/"
+                    + filename
+                )
+
+
+        save_products(products)
+
+
+        return redirect(
+            url_for("seller_panel")
+        )
+
+
+    return render_template_string(
+        EDIT_HTML,
+        product=product
+    )
+
+
+# ==============================
+# DELETE PRODUCT
+# ==============================
+
+@app.route(
+    "/seller/delete/<product_id>"
+)
+def delete_product(product_id):
+
+    if not session.get("seller"):
+
+        return redirect(
+            url_for("seller_login")
+        )
+
+
+    products = load_products()
+
+
+    product = next(
+        (
+            p for p in products
+            if p["id"] == product_id
+        ),
+        None
+    )
+
+
+    if product:
+
+        image = product.get(
+            "image",
+            ""
+        )
+
+
+        filename = os.path.basename(
+            image
+        )
+
+
+        filepath = os.path.join(
+            UPLOAD_FOLDER,
+            filename
+        )
+
+
+        if os.path.exists(filepath):
+
+            try:
+                os.remove(filepath)
+            except:
+                pass
+
+
+        products = [
+            p for p in products
+            if p["id"] != product_id
+        ]
+
+
+        save_products(products)
+
+
+    return redirect(
+        url_for("seller_panel")
+    )
+
+
+# ==============================
+# RUN SERVER
+# ==============================
+
+if __name__ == "__main__":
+
+    print("")
+    print("====================================")
+    print("       IFTUU FURNITURE WEBSITE")
+    print("====================================")
+    print("")
+    print("Website:")
+    print("http://127.0.0.1:5000")
+    print("")
+    print("Seller Login:")
+    print("http://127.0.0.1:5000/seller/login")
+    print("")
+    print("Username: seller")
+    print("Password: 1234")
+    print("")
+    print("====================================")
+
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )
 <html lang="en">
 <head>
 <meta charset="UTF-8">
