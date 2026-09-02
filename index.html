@@ -1,234 +1,1084 @@
 <!DOCTYPE html>
-<html lang="om">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iftuu Furniture - Luxury & Quality</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        :root {
-            --primary: #d4af37;
-            --dark: #121212;
-            --card-bg: #1e1e1e;
-            --text-light: #f4f4f4;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>IFTU FURNITURE</title>
 
-        body { background-color: #0a0a0a; color: var(--text-light); }
-
-        header { background: var(--dark); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .logo h1 { color: var(--primary); font-size: 26px; font-weight: bold; letter-spacing: 1px; }
-        .logo p { font-size: 11px; color: #aaa; }
-        .contact-header a { color: var(--primary); text-decoration: none; font-size: 18px; font-weight: bold; }
-
-        .hero { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('8.jpg'); background-size: cover; background-position: center; text-align: center; padding: 70px 20px; border-bottom: 1px solid #333; }
-        .hero h2 { font-size: 32px; color: var(--primary); margin-bottom: 10px; }
-        .hero p { font-size: 16px; color: #ddd; margin-bottom: 20px; }
-        .btn-main { background: var(--primary); color: #000; padding: 12px 30px; border: none; font-weight: bold; font-size: 16px; border-radius: 25px; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; }
-        .btn-main:hover { background: #fff; transform: scale(1.05); }
-
-        .filter-container { text-align: center; margin: 30px 0 10px; }
-        .filter-btn { background: #222; color: #fff; border: 1px solid var(--primary); padding: 8px 18px; margin: 5px; border-radius: 20px; cursor: pointer; transition: 0.3s; }
-        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: #000; font-weight: bold; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        
-        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #2a2a2a; transition: 0.3s; position: relative; }
-        .card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2); }
-        
-        .card-img-wrapper { position: relative; width: 100%; height: 260px; overflow: hidden; cursor: pointer; }
-        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card:hover img { transform: scale(1.08); }
-
-        .card-body { padding: 18px; text-align: center; }
-        .card-title { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 8px; }
-        .card-desc { font-size: 12px; color: #aaa; margin-bottom: 12px; height: 32px; overflow: hidden; }
-        .price-tag { font-size: 18px; color: var(--primary); font-weight: bold; margin-bottom: 15px; }
-        .btn-order { display: block; width: 100%; background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 10px; border-radius: 6px; font-weight: bold; text-decoration: none; transition: 0.3s; }
-        .btn-order:hover { background: var(--primary); color: #000; }
-
-        .modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
-        .modal img { max-width: 90%; max-height: 80%; border: 3px solid var(--primary); border-radius: 8px; }
-        .close-modal { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 35px; cursor: pointer; }
-
-        footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; margin-top: 50px; border-top: 2px solid var(--primary); font-size: 13px; }
-        footer b { color: var(--primary); }
-    </style>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,sans-serif;
+ background:#f5f2ec;color:#171717
+}
+header{
+ position:sticky;top:0;z-index:10;
+ background:white;padding:12px 5%;
+ display:flex;justify-content:space-between;
+ align-items:center;border-bottom:1px solid #ddd
+}
+.logo{
+ width:55px;height:55px;border-radius:50%;
+ object-fit:cover
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand h2{margin:0}
+button{
+ border:0;border-radius:9px;
+ padding:10px 14px;cursor:pointer;font-weight:bold
+}
+.gold{background:#d49a32;color:white}
+.gray{background:#eee}
+.container{width:92%;max-width:1200px;margin:30px auto}
+.search{
+ display:flex;background:white;
+ border:1px solid #ddd;border-radius:10px;
+ overflow:hidden
+}
+.search input{
+ flex:1;border:0;outline:0;padding:14px;font-size:16px
+}
+.categories{
+ display:flex;gap:8px;flex-wrap:wrap;margin:18px 0
+}
+.products{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+ gap:20px
+}
+.card{
+ background:white;border-radius:15px;
+ overflow:hidden;box-shadow:0 4px 18px #0001
+}
+.card img{
+ width:100%;height:230px;object-fit:cover
+}
+.info{padding:16px}
+.info h3{margin:0 0 7px}
+.price{
+ color:#d49a32;font-size:21px;
+ font-weight:bold;margin:8px 0
+}
+.actions{
+ display:flex;gap:6px;
+ flex-wrap:wrap;margin-top:12px
+}
+.comments,.share{
+ display:none;margin-top:12px;
+ border-top:1px solid #ddd;padding-top:10px
+}
+.comments input{
+ width:100%;padding:10px;
+ border:1px solid #ddd;border-radius:8px
+}
+.comment{
+ background:#f1eee8;
+ padding:8px;border-radius:7px;margin-top:6px
+}
+.modal{
+ display:none;position:fixed;
+ inset:0;background:#0009;
+ align-items:center;justify-content:center;
+ padding:15px;z-index:100
+}
+.box{
+ background:white;width:100%;
+ max-width:520px;max-height:90vh;
+ overflow:auto;padding:22px;border-radius:15px
+}
+.close{float:right;font-size:27px;cursor:pointer}
+.box label{
+ display:block;font-weight:bold;margin-top:12px
+}
+.box input,.box textarea,.box select{
+ width:100%;padding:12px;
+ margin-top:6px;border:1px solid #ddd;
+ border-radius:8px
+}
+.upload{
+ border:2px dashed #ccc;
+ padding:22px;text-align:center;
+ margin-top:7px;border-radius:10px
+}
+.preview{
+ display:none;width:100%;
+ max-height:250px;object-fit:contain;
+ margin-top:10px;border-radius:10px
+}
+.hero{
+ padding:70px 7%;color:white;
+ background:
+ linear-gradient(#0009,#0004),
+ url("https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1600&q=80")
+ center/cover
+}
+.hero h1{font-size:45px;margin:0 0 10px}
+.hero p{font-size:18px}
+footer{
+ background:#111;color:white;
+ text-align:center;padding:35px;margin-top:50px
+}
+@media(max-width:650px){
+ header{flex-wrap:wrap;justify-content:center}
+ .hero h1{font-size:32px}
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <div class="logo">
-            <h1>IFTUU FURNITURE</h1>
-            <p>Elegance you deserve, Quality you can trust</p>
-        </div>
-        <div class="contact-header">
-            <a href="tel:0910217822">📞 0910217822</a>
-            <div style="font-size: 11px; color: #aaa;">Gincii & Jelduu</div>
-        </div>
-    </header>
+<header>
 
-    <div class="hero">
-        <h2>Qulqullinaa fi Bareedina Mana Keessaniif</h2>
-        <p>Meeshaalee mana keessaa ammayyaa fi jabaatoo ta'an nu biraa argattu!</p>
-        <a href="tel:0910217822" class="btn-main">Amma Bilbilaa</a>
-    </div>
+<div class="brand">
+<img src="logo.jpg" class="logo">
+<div>
+<h2>IFTU FURNITURE</h2>
+<small>Furniture Marketplace</small>
+</div>
+</div>
 
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filterItems('all', event)">Hunda (All)</button>
-        <button class="filter-btn" onclick="filterItems('sofa', event)">Sofa & Siree</button>
-        <button class="filter-btn" onclick="filterItems('table', event)">Minjalaa & TV</button>
-        <button class="filter-btn" onclick="filterItems('storage', event)">Wardrobe & Kabinee</button>
-    </div>
+<div>
 
-    <div class="container">
-        <div class="grid">
+<!-- OWNER ONLY -->
+<button id="addBtn"
+class="gold"
+onclick="openPost()"
+style="display:none">
+＋ Add Post
+</button>
 
-            <div class="card" data-category="sofa">
-                <div class="card-img-wrapper" onclick="openLightbox('1.jpg')">
-                    <img src="1.jpg" alt="Siree Ammayyaa">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Siree Ammayyaa (Luxury Bed)</div>
-                    <div class="card-desc">Ifeensaa fi Bareedina lamiin kan faaya'ee</div>
-                    <div class="price-tag">Gatii Madaalawaa</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
+<button id="loginBtn"
+class="gray"
+onclick="openLogin()">
+👤 Owner Login
+</button>
 
-            <div class="card" data-category="sofa">
-                <div class="card-img-wrapper" onclick="openLightbox('2.jpg')">
-                    <img src="2.jpg" alt="Sofa Corner">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Sofa Set Ammayyaa</div>
-                    <div class="card-desc">Mijataa fi Qulqullina Olaanaa Qabu</div>
-                    <div class="price-tag">Gatii Madaalawaa</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
+<button id="logoutBtn"
+class="gray"
+onclick="logout()"
+style="display:none">
+Logout
+</button>
 
-            <div class="card" data-category="table">
-                <div class="card-img-wrapper" onclick="openLightbox('3.jpg')">
-                    <img src="3.jpg" alt="TV Stand">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">TV Istandi (Balinii 2m)</div>
-                    <div class="card-desc">Walini Caalaa Fi Durable | Ammayyaa</div>
-                    <div class="price-tag">42,000 Qarshii</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
+</div>
 
-            <div class="card" data-category="table">
-                <div class="card-img-wrapper" onclick="openLightbox('4.jpg')">
-                    <img src="4.jpg" alt="Dining Table">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Minjalaa Nyataa (Dining Table)</div>
-                    <div class="card-desc">Minjalaa nyataa tajaajila gatii madaalawaan</div>
-                    <div class="price-tag">90,000 Qarshii</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
+</header>
 
-            <div class="card" data-category="storage">
-                <div class="card-img-wrapper" onclick="openLightbox('5.jpg')">
-                    <img src="5.jpg" alt="Cupboard">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Kabinee Mana Kuffaana</div>
-                    <div class="card-desc">Spacious Storage | Stylish Design</div>
-                    <div class="price-tag">Gatii Madaalawaa</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
 
-            <div class="card" data-category="table">
-                <div class="card-img-wrapper" onclick="openLightbox('6.jpg')">
-                    <img src="6.jpg" alt="Modern Dining Table">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Minjalaa Nyataa Gurraacha</div>
-                    <div class="card-desc">Modern Design | Premium Quality</div>
-                    <div class="price-tag">Gatii Madaalawaa</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
+<section class="hero">
 
-            <div class="card" data-category="table">
-                <div class="card-img-wrapper" onclick="openLightbox('7.jpg')">
-                    <img src="7.jpg" alt="TV Stand Wall">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">TV Istandi Gudaa (Wall Design)</div>
-                    <div class="card-desc">Bagarawandi Saakhnaji Jitumbarbada</div>
-                    <div class="price-tag">Gatii Feyyisaa Bilisimaa</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
+<h1>IFTU FURNITURE</h1>
 
-            <div class="card" data-category="sofa">
-                <div class="card-img-wrapper" onclick="openLightbox('8.jpg')">
-                    <img src="8.jpg" alt="Sofa L-Shape Blue">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Sofa L-Shape (Blue)</div>
-                    <div class="card-desc">Jabaataa & Dheeressa | Mijataa & Bareedaa</div>
-                    <div class="price-tag">110,000 Qarshii</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
+<p>
+Beautiful furniture for your home and office.
+</p>
 
-            <div class="card" data-category="storage">
-                <div class="card-img-wrapper" onclick="openLightbox('9.jpg')">
-                    <img src="9.jpg" alt="Wardrobe">
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Wardrobe Premium Quality</div>
-                    <div class="card-desc">Qulqullina, ciminaa fi bareedina qabatee</div>
-                    <div class="price-tag">60,000 Qarshii</div>
-                    <a href="tel:0910217822" class="btn-order">Ajajuuf Bilbilaa</a>
-                </div>
-            </div>
+</section>
 
-        </div>
-    </div>
 
-    <div id="imageModal" class="modal">
-        <span class="close-modal" onclick="closeLightbox()">&times;</span>
-        <img id="modalImg" src="" alt="Full Preview">
-    </div>
+<main class="container">
 
-    <footer>
-        &copy; 2026 <b>IFTUU FURNITURE</b> - Bakkee: Gincii & Jelduu | Bilbilaa: <b>0910217822</b>
-    </footer>
+<div class="search">
 
-    <script>
-        function filterItems(category, e) {
-            let cards = document.querySelectorAll('.card');
-            let buttons = document.querySelectorAll('.filter-btn');
+<input
+id="search"
+placeholder="Search furniture..."
+oninput="showPosts()">
 
-            buttons.forEach(btn => btn.classList.remove('active'));
-            e.target.classList.add('active');
+<button
+class="gold"
+onclick="showPosts()">
+🔍 Search
+</button>
 
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
+</div>
 
-        function openLightbox(imgSrc) {
-            document.getElementById('modalImg').src = imgSrc;
-            document.getElementById('imageModal').style.display = 'flex';
-        }
 
-        function closeLightbox() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
-    </script>
+<div class="categories">
+
+<button class="gold"
+onclick="category='all';showPosts()">
+All
+</button>
+
+<button class="gray"
+onclick="category='sofa';showPosts()">
+🛋️ Sofa
+</button>
+
+<button class="gray"
+onclick="category='bed';showPosts()">
+🛏️ Bed
+</button>
+
+<button class="gray"
+onclick="category='table';showPosts()">
+🪑 Table
+</button>
+
+<button class="gray"
+onclick="category='chair';showPosts()">
+💺 Chair
+</button>
+
+<button class="gray"
+onclick="category='office';showPosts()">
+💻 Office
+</button>
+
+</div>
+
+
+<div id="products" class="products"></div>
+
+</main>
+
+
+<!-- OWNER LOGIN -->
+
+<div id="loginModal" class="modal">
+
+<div class="box">
+
+<span class="close"
+onclick="closeModal('loginModal')">×</span>
+
+<h2>👤 Owner Login</h2>
+
+<label>Name</label>
+<input id="ownerName" placeholder="Owner name">
+
+<label>Password</label>
+<input id="ownerPassword"
+type="password"
+placeholder="Password">
+
+<button
+class="gold"
+style="width:100%;margin-top:18px"
+onclick="login()">
+
+Login
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ADD POST -->
+
+<div id="postModal" class="modal">
+
+<div class="box">
+
+<span class="close"
+onclick="closeModal('postModal')">×</span>
+
+<h2>＋ Add Furniture Post</h2>
+
+
+<label>Furniture Name</label>
+
+<input
+id="name"
+placeholder="Modern Sofa">
+
+
+<label>Price ETB</label>
+
+<input
+id="price"
+type="number"
+placeholder="35000">
+
+
+<label>Location</label>
+
+<input
+id="location"
+placeholder="Addis Ababa">
+
+
+<label>Category</label>
+
+<select id="cat">
+
+<option value="sofa">Sofa</option>
+<option value="bed">Bed</option>
+<option value="table">Table</option>
+<option value="chair">Chair</option>
+<option value="office">Office</option>
+
+</select>
+
+
+<label>Description</label>
+
+<textarea
+id="description"
+rows="4"
+placeholder="Furniture description">
+</textarea>
+
+
+<label>📸 Add Photo</label>
+
+<div class="upload">
+
+<input
+id="photo"
+type="file"
+accept="image/*"
+onchange="preview()">
+
+<img
+id="preview"
+class="preview">
+
+</div>
+
+
+<button
+class="gold"
+style="width:100%;margin-top:18px"
+onclick="addPost()">
+
+🚀 POST
+
+</button>
+
+</div>
+
+</div>
+
+
+<footer>
+
+<h2>IFTU FURNITURE</h2>
+
+<p>Buy • Sell • Discover</p>
+
+<button
+onclick="telegram()">
+✈️ Telegram
+</button>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   OWNER
+========================= */
+
+let owner =
+JSON.parse(localStorage.getItem("iftuOwner") || "null");
+
+
+/* =========================
+   POSTS
+========================= */
+
+let posts =
+JSON.parse(localStorage.getItem("iftuPosts") || "null")
+||
+[];
+
+let category="all";
+
+
+/* =========================
+   SAVE
+========================= */
+
+function save(){
+ localStorage.setItem(
+ "iftuPosts",
+ JSON.stringify(posts)
+ );
+}
+
+
+/* =========================
+   SHOW POSTS
+========================= */
+
+function showPosts(){
+
+let search =
+document.getElementById("search")
+.value.toLowerCase();
+
+
+let list =
+posts.filter(p=>{
+
+let text =
+(p.name+" "+
+p.location+" "+
+p.description)
+.toLowerCase();
+
+return(
+(category==="all"||p.category===category)
+&&
+text.includes(search)
+);
+
+});
+
+
+let html="";
+
+
+if(list.length===0){
+
+html=`
+<div style="grid-column:1/-1;text-align:center">
+<h2>📸 No furniture posts yet</h2>
+<p>Owner will add furniture photos here.</p>
+</div>
+`;
+
+}else{
+
+list.forEach(p=>{
+
+html+=`
+
+<div class="card">
+
+<img
+src="${p.photo}"
+alt="${p.name}">
+
+<div class="info">
+
+<h3>${p.name}</h3>
+
+<div>📍 ${p.location}</div>
+
+<div class="price">
+${Number(p.price).toLocaleString()} ETB
+</div>
+
+<p>${p.description}</p>
+
+
+<div class="actions">
+
+<button
+class="gray"
+onclick="like(${p.id})">
+❤️ ${p.likes}
+</button>
+
+<button
+class="gray"
+onclick="comments(${p.id})">
+💬 Comment
+</button>
+
+<button
+class="gray"
+onclick="share(${p.id})">
+🔗 Share
+</button>
+
+</div>
+
+
+<div
+id="comments${p.id}"
+class="comments">
+
+<input
+id="commentInput${p.id}"
+placeholder="Write comment...">
+
+<button
+class="gold"
+onclick="sendComment(${p.id})">
+Send
+</button>
+
+<div id="commentList${p.id}">
+${(p.comments||[]).map(c=>
+`
+<div class="comment">
+<b>${c.user}</b>: ${c.text}
+</div>
+`).join("")}
+</div>
+
+</div>
+
+
+<div
+id="share${p.id}"
+class="share">
+
+<button
+onclick="telegramPost(${p.id})">
+✈️ Telegram
+</button>
+
+<button
+onclick="whatsappPost(${p.id})">
+💬 WhatsApp
+</button>
+
+<button
+onclick="copyPost(${p.id})">
+🔗 Copy Link
+</button>
+
+</div>
+
+
+${
+owner && owner.id===p.ownerId
+?
+`
+<button
+class="gray"
+onclick="deletePost(${p.id})">
+🗑️ Delete
+</button>
+`
+:""
+}
+
+</div>
+</div>
+
+`;
+
+});
+
+}
+
+document.getElementById("products").innerHTML=html;
+
+}
+
+
+/* =========================
+   LIKE
+========================= */
+
+function like(id){
+
+let p=posts.find(x=>x.id===id);
+
+p.likes++;
+
+save();
+
+showPosts();
+
+}
+
+
+/* =========================
+   COMMENTS
+========================= */
+
+function comments(id){
+
+let box=
+document.getElementById("comments"+id);
+
+box.style.display=
+box.style.display==="block"
+?"none"
+:"block";
+
+}
+
+
+function sendComment(id){
+
+let input=
+document.getElementById(
+"commentInput"+id
+);
+
+if(!input.value.trim())return;
+
+let p=
+posts.find(x=>x.id===id);
+
+p.comments.push({
+
+user:"Visitor",
+text:input.value
+
+});
+
+save();
+
+showPosts();
+
+setTimeout(
+()=>comments(id),100
+);
+
+}
+
+
+/* =========================
+   SHARE
+========================= */
+
+function share(id){
+
+let box=
+document.getElementById("share"+id);
+
+box.style.display=
+box.style.display==="block"
+?"none"
+:"block";
+
+}
+
+
+function telegramPost(id){
+
+let p=
+posts.find(x=>x.id===id);
+
+let url=
+location.href+
+"?post="+id;
+
+window.open(
+"https://t.me/share/url?url="+
+encodeURIComponent(url)+
+"&text="+
+encodeURIComponent(p.name),
+"_blank"
+);
+
+}
+
+
+function whatsappPost(id){
+
+let p=
+posts.find(x=>x.id===id);
+
+window.open(
+"https://wa.me/?text="+
+encodeURIComponent(
+p.name+
+" - "+
+p.price+
+" ETB"
+),
+"_blank"
+);
+
+}
+
+
+function copyPost(id){
+
+navigator.clipboard.writeText(
+location.href+"?post="+id
+);
+
+alert("✅ Link copied");
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function openLogin(){
+
+document.getElementById(
+"loginModal"
+).style.display="flex";
+
+}
+
+
+function login(){
+
+let name=
+document.getElementById(
+"ownerName"
+).value.trim();
+
+let password=
+document.getElementById(
+"ownerPassword"
+).value;
+
+
+/*
+ CHANGE THESE
+ */
+
+const OWNER_NAME="iftu";
+const OWNER_PASSWORD="1234";
+
+
+if(
+name===OWNER_NAME &&
+password===OWNER_PASSWORD
+){
+
+owner={
+id:"OWNER_IFTU",
+name:name
+};
+
+localStorage.setItem(
+"iftuOwner",
+JSON.stringify(owner)
+);
+
+closeModal("loginModal");
+
+updateUI();
+
+showPosts();
+
+alert("✅ Owner Login successful");
+
+}else{
+
+alert(
+"❌ Wrong Owner name or password"
+);
+
+}
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+owner=null;
+
+localStorage.removeItem(
+"iftuOwner"
+);
+
+updateUI();
+
+showPosts();
+
+}
+
+
+/* =========================
+   UI
+========================= */
+
+function updateUI(){
+
+document.getElementById(
+"addBtn"
+).style.display=
+owner
+?"inline-block"
+:"none";
+
+
+document.getElementById(
+"loginBtn"
+).style.display=
+owner
+?"none"
+:"inline-block";
+
+
+document.getElementById(
+"logoutBtn"
+).style.display=
+owner
+?"inline-block"
+:"none";
+
+}
+
+
+/* =========================
+   OPEN POST
+========================= */
+
+function openPost(){
+
+if(!owner){
+
+openLogin();
+
+return;
+
+}
+
+document.getElementById(
+"postModal"
+).style.display="flex";
+
+}
+
+
+/* =========================
+   PHOTO PREVIEW
+========================= */
+
+function preview(){
+
+let file=
+document.getElementById(
+"photo"
+).files[0];
+
+if(!file)return;
+
+let reader=
+new FileReader();
+
+reader.onload=function(e){
+
+let img=
+document.getElementById(
+"preview"
+);
+
+img.src=e.target.result;
+
+img.style.display="block";
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+   ADD POST
+========================= */
+
+function addPost(){
+
+if(!owner){
+
+alert("Owner only");
+
+return;
+
+}
+
+
+let name=
+document.getElementById("name")
+.value.trim();
+
+let price=
+document.getElementById("price")
+.value;
+
+let location=
+document.getElementById("location")
+.value.trim();
+
+let cat=
+document.getElementById("cat")
+.value;
+
+let description=
+document.getElementById(
+"description"
+).value.trim();
+
+let file=
+document.getElementById(
+"photo"
+).files[0];
+
+
+if(
+!name ||
+!price ||
+!location ||
+!file
+){
+
+alert(
+"Furniture name, price, location and photo are required."
+);
+
+return;
+
+}
+
+
+let reader=
+new FileReader();
+
+
+reader.onload=function(e){
+
+posts.unshift({
+
+id:Date.now(),
+
+ownerId:owner.id,
+
+name:name,
+
+price:price,
+
+location:location,
+
+category:cat,
+
+description:
+description,
+
+photo:
+e.target.result,
+
+likes:0,
+
+comments:[]
+
+});
+
+
+save();
+
+closeModal("postModal");
+
+clearForm();
+
+showPosts();
+
+alert(
+"✅ Furniture photo posted successfully!"
+);
+
+};
+
+
+reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deletePost(id){
+
+let p=
+posts.find(x=>x.id===id);
+
+
+if(
+!owner ||
+p.ownerId!==owner.id
+){
+
+alert(
+"❌ Owner only"
+);
+
+return;
+
+}
+
+
+if(
+confirm(
+"Delete this furniture post?"
+)
+){
+
+posts=
+posts.filter(x=>x.id!==id);
+
+save();
+
+showPosts();
+
+}
+
+}
+
+
+/* =========================
+   CLEAR
+========================= */
+
+function clearForm(){
+
+document.getElementById("name").value="";
+document.getElementById("price").value="";
+document.getElementById("location").value="";
+document.getElementById("description").value="";
+document.getElementById("photo").value="";
+
+document.getElementById(
+"preview"
+).style.display="none";
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function closeModal(id){
+
+document.getElementById(
+id
+).style.display="none";
+
+}
+
+
+/* =========================
+   TELEGRAM
+========================= */
+
+function telegram(){
+
+window.open(
+"https://t.me/iftufurniture",
+"_blank"
+);
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+updateUI();
+
+showPosts();
+
+</script>
+
 </body>
 </html>
