@@ -756,7 +756,9 @@ footer{
       });
       const fileData = await res.json();
 
-      if(!fileData.secure_url) throw new Error("Image upload failed");
+      if(!res.ok || !fileData.secure_url) {
+        throw new Error(fileData.error ? fileData.error.message : "Image upload failed");
+      }
 
       statusDiv.textContent = "💾 Saving post to Firebase...";
       await addDoc(collection(db, "posts"), {
@@ -870,6 +872,8 @@ footer{
         document.getElementById("siteLogo").src = fileData.secure_url;
         window.closeModal("logoModal");
         alert("✅ Logo changed successfully!");
+      } else {
+        alert("Failed to upload logo: " + (fileData.error ? fileData.error.message : "Unknown error"));
       }
     } catch(e) {
       alert("Failed to upload logo.");
