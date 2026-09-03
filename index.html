@@ -473,7 +473,7 @@ footer{
 <!-- ================= FIREBASE & LOGIC ================= -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   // Firebase Config
   const firebaseConfig = {
@@ -507,6 +507,20 @@ footer{
     const div = document.createElement("div");
     div.textContent = text || "";
     return div.innerHTML;
+  }
+
+  // Fetch Global Logo from Firebase
+  async function fetchLogo() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "settings"));
+      querySnapshot.forEach((docSnap) => {
+        if(docSnap.id === "site_logo" && docSnap.data().url) {
+          document.getElementById("siteLogo").src = docSnap.data().url;
+        }
+      });
+    } catch(e) {
+      console.error("Error fetching logo:", e);
+    }
   }
 
   // Load Posts from Firebase
@@ -831,7 +845,7 @@ footer{
     render();
   };
 
-  // Logo handling
+  // Logo handling (Saved to Firebase for Everyone)
   window.changeLogo = function(){
     if(!owner){ window.openLogin(); return; }
     document.getElementById("logoModal").style.display = "flex";
@@ -868,14 +882,19 @@ footer{
       const fileData = await res.json();
 
       if(fileData.secure_url){
-        localStorage.setItem("iftuLogo", fileData.secure_url);
+        // Save to Firebase so everyone sees the updated logo
+        await setDoc(doc(db, "settings", "site_logo"), {
+          url: fileData.secure_url
+        });
+
         document.getElementById("siteLogo").src = fileData.secure_url;
         window.closeModal("logoModal");
-        alert("✅ Logo changed successfully!");
+        alert("✅ Logo changed successfully for everyone!");
       } else {
         alert("Failed to upload logo: " + (fileData.error ? fileData.error.message : "Unknown error"));
       }
     } catch(e) {
+      console.error(e);
       alert("Failed to upload logo.");
     } finally {
       logoBtn.disabled = false;
@@ -904,11 +923,10 @@ footer{
   };
 
   // Init
-  const savedLogo = localStorage.getItem("iftuLogo");
-  if(savedLogo) document.getElementById("siteLogo").src = savedLogo;
   if(localStorage.getItem("iftuTheme") === "dark") document.body.classList.add("dark");
 
   updateUI();
+  fetchLogo();
   fetchPosts();
 </script>
 
