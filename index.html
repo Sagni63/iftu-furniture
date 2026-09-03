@@ -362,25 +362,42 @@ footer{
 
 <!-- SEARCH -->
 <div class="search">
-<input id="search" placeholder="Search furniture..." oninput="render()">
-<button class="gold" onclick="render()">🔎 Search</button>
+<input id="search" placeholder="የሚፈልጉትን የቤት እቃ እዚህ ይፈልጉ..." oninput="handleSearch()">
+<button class="gold" onclick="handleSearch()">🔎 Search</button>
 </div>
 
-<!-- CATEGORY -->
-<div class="categories">
-<button class="gold" onclick="setCategory('all')">All</button>
-<button class="gray" onclick="setCategory('sofa')">🛋️ Sofa</button>
-<button class="gray" onclick="setCategory('bed')">🛏️ Bed</button>
-<button class="gray" onclick="setCategory('table')">🪑 Table</button>
-<button class="gray" onclick="setCategory('chair')">💺 Chair</button>
-<button class="gray" onclick="setCategory('office')">💻 Office</button>
-<button class="gray" onclick="setCategory('tvstand')">📺 TV Stand</button>
-<button class="gray" onclick="setCategory('cabinet')">🚪 Cabinet</button>
-<button class="gray" onclick="setCategory('dining')">🍽️ Dining</button>
+<!-- CATEGORY BUTTONS -->
+<div class="categories" id="categoriesContainer">
+  <button class="gold" onclick="setCategory('all')">All</button>
+  <button class="gray" onclick="setCategory('sofa')">🛋️ Sofa</button>
+  <button class="gray" onclick="setCategory('bed')">🛏️ Bed</button>
+  <button class="gray" onclick="setCategory('table')">🪑 Table</button>
+  <button class="gray" onclick="setCategory('chair')">💺 Chair</button>
+  <button class="gray" onclick="setCategory('office')">💻 Office</button>
+  <button class="gray" onclick="setCategory('tvstand')">📺 TV Stand</button>
+  <button class="gray" onclick="setCategory('cabinet')">🚪 Cabinet</button>
+  <button class="gray" onclick="setCategory('cupboard')">🗄️ ቁምሳጥን (Cupboard)</button>
+  <button class="gray" onclick="setCategory('dining')">🍽️ Dining</button>
+  <!-- ➕ Add Category Button for Owner -->
+  <button id="addCategoryBtn" class="gold" onclick="openAddCategoryModal()" style="display:none">➕ Add Category</button>
 </div>
 
 <div id="products" class="products"></div>
 </main>
+
+<!-- ================= ADD CATEGORY MODAL ================= -->
+<div id="addCategoryModal" class="modal">
+<div class="box form">
+<span class="close" onclick="closeModal('addCategoryModal')">×</span>
+<h2>➕ Add New Category</h2>
+<p class="muted">Create a new category for your products.</p>
+
+<label>Category Name (English/Amharic)</label>
+<input id="newCatName" placeholder="e.g. 🪞 Mirror or መስታወት">
+
+<button class="gold" style="width:100%;margin-top:18px" onclick="saveNewCategory()">✅ Save Category</button>
+</div>
+</div>
 
 <!-- ================= LOGIN ================= -->
 <div id="loginModal" class="modal">
@@ -431,6 +448,7 @@ footer{
 <option value="office">Office</option>
 <option value="tvstand">TV Stand</option>
 <option value="cabinet">Cabinet</option>
+<option value="cupboard">ቁምሳጥን (Cupboard)</option>
 <option value="dining">Dining</option>
 </select>
 
@@ -515,6 +533,19 @@ footer{
     return div.innerHTML;
   }
 
+  // Fetch Custom Categories from Firebase
+  async function fetchCustomCategories() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "categories"));
+      querySnapshot.forEach((docSnap) => {
+        const cat = docSnap.data();
+        addCategoryToUI(cat.name, cat.id);
+      });
+    } catch(e) {
+      console.error("Error fetching custom categories:", e);
+    }
+  }
+
   // Fetch Global Logo from Firebase
   async function fetchLogo() {
     try {
@@ -543,11 +574,27 @@ footer{
     }
   }
 
+  // Search Input Functionality
+  window.handleSearch = function(){
+    const searchVal = document.getElementById("search").value.trim();
+    if(searchVal !== "") {
+      selectedCategory = "all"; // Reset category to "all" when searching
+    }
+    render();
+  };
+
   window.render = function(){
     const search = document.getElementById("search").value.toLowerCase().trim();
+    
     const list = posts.filter(p => {
       const categoryOK = selectedCategory === "all" || p.category === selectedCategory;
-      const searchOK = (p.name + " " + p.location + " " + p.description).toLowerCase().includes(search);
+      const searchOK = (
+        (p.name || '') + ' ' + 
+        (p.location || '') + ' ' + 
+        (p.description || '') + ' ' + 
+        (p.category || '')
+      ).toLowerCase().includes(search);
+      
       return categoryOK && searchOK;
     });
 
@@ -556,8 +603,8 @@ footer{
     if(list.length === 0){
       container.innerHTML = `
         <div style="grid-column:1/-1;text-align:center;padding:60px">
-          <h2>📸 No furniture posts yet</h2>
-          <p>The owner will add furniture photos here.</p>
+          <h2>🔍 ምንም የተገኘ እቃ የለም</h2>
+          <p>እባክዎን ሌላ ቃል ፅፈው ይፈልጉ።</p>
         </div>
       `;
       return;
@@ -608,6 +655,47 @@ footer{
       `;
     }).join("");
   };
+
+  // Add Category Dynamic Handling
+  window.openAddCategoryModal = function(){
+    if(!owner){ window.openLogin(); return; }
+    document.getElementById("addCategoryModal").style.display = "flex";
+  };
+
+  window.saveNewCategory = async function(){
+    const name = document.getElementById("newCatName").value.trim();
+    if(!name){ alert("Please write a category name."); return; }
+
+    const catId = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    try {
+      await addDoc(collection(db, "categories"), { name: name, id: catId });
+      addCategoryToUI(name, catId);
+      document.getElementById("newCatName").value = "";
+      window.closeModal("addCategoryModal");
+      alert("✅ Category added successfully!");
+    } catch(e) {
+      console.error(e);
+      alert("Failed to save category.");
+    }
+  };
+
+  function addCategoryToUI(name, catId){
+    const container = document.getElementById("categoriesContainer");
+    const addBtn = document.getElementById("addCategoryBtn");
+
+    const btn = document.createElement("button");
+    btn.className = "gray";
+    btn.textContent = name;
+    btn.onclick = () => window.setCategory(catId);
+    container.insertBefore(btn, addBtn);
+
+    const select = document.getElementById("postCategory");
+    const opt = document.createElement("option");
+    opt.value = catId;
+    opt.textContent = name;
+    select.appendChild(opt);
+  }
 
   // Like Action
   window.likePost = async function(id){
@@ -700,6 +788,7 @@ footer{
   function updateUI(){
     document.getElementById("addButton").style.display = owner ? "inline-block" : "none";
     document.getElementById("logoButton").style.display = owner ? "inline-block" : "none";
+    document.getElementById("addCategoryBtn").style.display = owner ? "inline-block" : "none";
     document.getElementById("loginButton").style.display = owner ? "none" : "inline-block";
     document.getElementById("logoutButton").style.display = owner ? "inline-block" : "none";
     document.getElementById("status").textContent = owner ? "👑 Owner: " + owner.name : "👤 Visitor";
@@ -851,7 +940,7 @@ footer{
     render();
   };
 
-  // Logo handling (Saved to Firebase for Everyone)
+  // Logo handling
   window.changeLogo = function(){
     if(!owner){ window.openLogin(); return; }
     document.getElementById("logoModal").style.display = "flex";
@@ -888,7 +977,6 @@ footer{
       const fileData = await res.json();
 
       if(fileData.secure_url){
-        // Save to Firebase so everyone sees the updated logo
         await setDoc(doc(db, "settings", "site_logo"), {
           url: fileData.secure_url
         });
@@ -897,7 +985,7 @@ footer{
         window.closeModal("logoModal");
         alert("✅ Logo changed successfully for everyone!");
       } else {
-        alert("Failed to upload logo: " + (fileData.error ? fileData.error.message : "Unknown error"));
+        alert("Failed to upload logo.");
       }
     } catch(e) {
       console.error(e);
@@ -933,9 +1021,9 @@ footer{
 
   updateUI();
   fetchLogo();
+  fetchCustomCategories();
   fetchPosts();
 </script>
 
 </body>
 </html>
-
